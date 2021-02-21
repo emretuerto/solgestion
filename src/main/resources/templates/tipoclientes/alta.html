@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>SOLGESTION</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+
+</head>
+<body>
+	<form role="form" th:action="@{/tipoclientes/alta}"
+		th:object="${tipoCliente}" method="post">
+		<div class="container">
+			<div>
+				<div class="row align-items-end">
+					<div class="form-group col-sm-2 row">
+						<label for="codigo">Código</label> <input type="number"
+							placeholder="----" autocomplete="nope" th:field="*{codigo}" id="codigo"
+							class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"
+						class="alert alert-danger col-sm-6"></small>
+
+				</div>
+				<div class="row align-items-end">
+					<div class="form-group col-sm-6 row">
+						<label for="descripción">Descripción</label> <input type="text"
+							th:field="*{descripcion}" class="form-control" id="descripcion">
+					</div>
+					<small th:if="${#fields.hasErrors('descripcion')}"
+						th:errors="*{descripcion}" class="alert alert-danger col-sm-6"></small>
+
+				</div>
+				<div class="col-sm-1">
+					<label> </label> <input type="submit" value="Alta"
+						class="btn btn-primary form-control">
+				</div>
+
+			</div>
+			<div>
+				<input type="hidden" th:field="*{activo}" id="id">
+			</div>
+			<div>
+				<input type="hidden" th:field="*{id}" id="id">
+			</div>
+		</div>
+	</form>
+</body>
+</html>
