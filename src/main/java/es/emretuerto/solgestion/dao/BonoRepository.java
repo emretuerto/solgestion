@@ -15,5 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface BonoRepository extends JpaRepository<Bono, Integer>{
     
     Bono findByIdentificadorBono(String identificador);
+
+	Bono findByCodigoBarras(String codigoBarras);
     
 }

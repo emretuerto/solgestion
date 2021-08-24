@@ -38,13 +38,6 @@
 			</tbody>
 		</table>
 		<nav th:replace="/tipoclientes/paginator-nav :: paginator"></nav>
-		<select class="custom-select my-1 mr-sm-2">
-			<option th:each="tipocliente: ${listadoTipoClientes}"
-				th:value="${tipocliente.id}" th:text="${tipocliente.descripcion}"></option>
-		</select> <select>
-			<option th:each="fototipo: ${listadoFototipos}"
-				th:value="${fototipo.id}" th:text="${fototipo.fototipo}"></option>
-		</select>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script

@@ -38,14 +38,14 @@ public class Bono implements Serializable {
     @Column(name = "IDENTIFICADOR_BONO", length = 10, nullable = false, unique = true)
     private String identificadorBono;
 
-    @Column(name = "CODIGO_BARRAS", length = 13, unique = true, nullable = true)
+    @Column(name = "CODIGO_BARRAS", length = 20, unique = true, nullable = true)
     private String codigoBarras;
 
     @Column(name = "ES_DE_MINUTOS")
     private Boolean esDeMinutos;
 
     @Column(name = "SESIONES")
-    private Double sesiones;
+    private Integer sesiones;
 
     @Column(name = "MINUTOS")
     private Integer minutos;
@@ -58,7 +58,7 @@ public class Bono implements Serializable {
 
     ;
 
-    public Bono(String identificadorBono, String codigoBarras, Boolean esDeMinutos, Double sesiones, Integer minutos) {
+    public Bono(String identificadorBono, String codigoBarras, Boolean esDeMinutos, Integer sesiones, Integer minutos) {
         this.identificadorBono = identificadorBono;
         this.codigoBarras = codigoBarras;
         this.esDeMinutos = esDeMinutos;
@@ -98,11 +98,11 @@ public class Bono implements Serializable {
         this.esDeMinutos = esDeMinutos;
     }
 
-    public Double getSesiones() {
+    public Integer getSesiones() {
         return sesiones;
     }
 
-    public void setSesiones(Double sesiones) {
+    public void setSesiones(Integer sesiones) {
         this.sesiones = sesiones;
     }
 
@@ -180,7 +180,7 @@ public class Bono implements Serializable {
 
     @Override
     public String toString() {
-        return "Bono{" + "identificadorBono=" + identificadorBono + ", esDeMinutos=" + esDeMinutos + ", sesiones=" + sesiones + ", minutos=" + minutos + '}';
+        return "Bono{" + "identificadorBono=" + identificadorBono + "Código de barras= " +  codigoBarras + ", esDeMinutos=" + esDeMinutos + ", sesiones=" + sesiones + ", minutos=" + minutos + '}';
     }
 
 }

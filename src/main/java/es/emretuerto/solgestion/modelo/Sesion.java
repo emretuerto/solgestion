@@ -112,7 +112,7 @@ public class Sesion implements Serializable {
 
     @Override
     public String toString() {
-        return "Sesion{" + "fecha=" + fecha + ", cliente=" + cliente.getCodigoCliente() + ", maquina=" + maquina.getNombre() + ", sesionesConsumidasBono=" + sesionesConsumidasBono + ", duracion=" + duracion + '}';
+        return "Sesion{" + "fecha=" + fecha + ", cliente=" + cliente.getCodigoBarras() + ", maquina=" + maquina.getNombre() + ", sesionesConsumidasBono=" + sesionesConsumidasBono + ", duracion=" + duracion + '}';
     }
     
 

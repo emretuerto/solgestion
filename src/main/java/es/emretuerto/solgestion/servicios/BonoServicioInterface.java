@@ -13,11 +13,11 @@ import es.emretuerto.solgestion.modelo.Bono;
  */
 public interface BonoServicioInterface {
     
-    public void recargaSesiones(Bono bono, Double sesiones);
+   // public void recargaSesiones(Bono bono, Integer sesiones);
 
     public void recargaMinutos(Bono bono, Integer minutos);
     
     public void restarMinutosBono (Bono bono, Integer minutos);
     
-    public void restarSesionesBono (Bono bono, Double sesiones);
+    // public void restarSesionesBono (Bono bono, Integer sesiones);
 }

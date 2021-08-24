@@ -41,7 +41,7 @@ public class SesionServicioImpl implements SesionServicioInterface{
                 bonoServicio.restarMinutosBono(bono, minutosConsumidos);
             }
             else{
-                bonoServicio.restarSesionesBono(bono, sesionesConsumidasBono);
+              //  bonoServicio.restarSesionesBono(bono, sesionesConsumidasBono);
             }
         }
         

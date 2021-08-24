@@ -39,16 +39,11 @@ public class ClienteServicioImpl implements ClienteServicioInterface {
         clienteDao.save(cliente);
     }
 
-    @Override
-    public ClienteDTO findByCodigo(String codigo) {
-        ClienteDTO clienteDTO = new ClienteDTO();
 
-        try {
-            Cliente cliente = clienteDao.findByCodigoCliente(codigo);
-            clienteDTO = MAPPER.map(ClienteDTO.class, cliente);
-        } catch (MappingException e) {
-        }
-        return clienteDTO;
-    }
+	@Override
+	public void insertar(Cliente cliente) {
+		clienteDao.save(cliente);
+		
+	}
 
 }

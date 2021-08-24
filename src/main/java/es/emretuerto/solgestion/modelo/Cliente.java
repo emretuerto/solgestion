@@ -3,6 +3,7 @@ package es.emretuerto.solgestion.modelo;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,10 +34,10 @@ public class Cliente implements Serializable {
     @Column(name = "ID")
     private Integer id;
 
-    @Column(name = "CODIGO_CLIENTE", length = 10, nullable = false, unique = true)
-    private String codigoCliente;
+  //  @Column(name = "CODIGO_CLIENTE", length = 10, nullable = false, unique = true)
+  //  private String codigoCliente;
 
-    @Column(name = "CODIGO_BARRAS", length = 13, unique = true, nullable = true)
+    @Column(name = "CODIGO_BARRAS", length = 20, unique = true, nullable = false)
     private String codigoBarras;
 
     @Column(name = "NOMBRE", length = 30, nullable = false)
@@ -61,7 +62,6 @@ public class Cliente implements Serializable {
     private String provincia;
 
     @Column(name = "FECHA_NACIMIENTO", columnDefinition = "DATE")
-   // @Temporal(TemporalType.DATE)
     private LocalDate fechaNacimiento;
 
     @Column(name = "TELEFONO_FIJO", length = 9)
@@ -73,20 +73,20 @@ public class Cliente implements Serializable {
     @Column(name = "EMAIL")
     private String email;
 
-    @ManyToOne
+/*    @ManyToOne
     @JoinColumn(name = "FOTOTIPO_ID")
     @Cascade(CascadeType.ALL)
     private Fototipo fototipo;
-
+*/
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     @Column(name = "SESIONES_CLIENTES")
     private List<Sesion> sesionesCliente = new ArrayList<Sesion>();
 
-    @ManyToOne
+  /*  @ManyToOne
     @JoinColumn(name = "TIPO_CLIENTE_ID", nullable = false)
     @Cascade(CascadeType.ALL)
     private TipoCliente tipoCliente;
-
+*/
     @ManyToOne
     @JoinColumn(name = "BONO_ID")
     @Cascade(CascadeType.ALL)
@@ -95,8 +95,7 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
-    public Cliente(String codigoCliente, String codigoBarras, String nombre, String apellidos, String nif, String direccion, String codigoPostal, String localidad, String provincia, LocalDate fechaNacimiento, String telefonoFijo, String telefonoMovil, String email, Fototipo fototipo, List<Sesion> sesionesCliente, TipoCliente tipoCliente, Bono bono) {
-        this.codigoCliente = codigoCliente;
+    public Cliente(String codigoBarras, String nombre, String apellidos, String nif, String direccion, String codigoPostal, String localidad, String provincia, LocalDate fechaNacimiento, String telefonoFijo, String telefonoMovil, String email, Fototipo fototipo, List<Sesion> sesionesCliente, TipoCliente tipoCliente, Bono bono) {
         this.codigoBarras = codigoBarras;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -109,9 +108,9 @@ public class Cliente implements Serializable {
         this.telefonoFijo = telefonoFijo;
         this.telefonoMovil = telefonoMovil;
         this.email = email;
-        this.fototipo = fototipo;
+      //  this.fototipo = fototipo;
         this.sesionesCliente = sesionesCliente;
-        this.tipoCliente = tipoCliente;
+     //   this.tipoCliente = tipoCliente;
         this.bono = bono;
     }
 
@@ -123,13 +122,6 @@ public class Cliente implements Serializable {
         this.id = id;
     }
 
-    public String getCodigoCliente() {
-        return codigoCliente;
-    }
-
-    public void setCodigoCliente(String codigoCliente) {
-        this.codigoCliente = codigoCliente;
-    }
 
     public String getCodigoBarras() {
         return codigoBarras;
@@ -227,14 +219,14 @@ public class Cliente implements Serializable {
         this.email = email;
     }
 
-    public Fototipo getFototipo() {
+  /*  public Fototipo getFototipo() {
         return fototipo;
     }
 
     public void setFototipo(Fototipo fototipo) {
         this.fototipo = fototipo;
     }
-
+*/
     public List<Sesion> getSesionesCliente() {
         return sesionesCliente;
     }
@@ -246,13 +238,13 @@ public class Cliente implements Serializable {
         });
     }
 
-    public TipoCliente getTipoCliente() {
+   /* public TipoCliente getTipoCliente() {
         return tipoCliente;
     }
 
     public void setTipoCliente(TipoCliente tipoCliente) {
         this.tipoCliente = tipoCliente;
-    }
+    }*/
 
     public Bono getBono() {
         return bono;
@@ -278,7 +270,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", codigoCliente=" + codigoCliente + ", nombre=" + nombre + ", apellidos=" + apellidos + ", nif=" + nif + ", direccion=" + direccion + ", codigoPostal=" + codigoPostal + ", localidad=" + localidad + ", provincia=" + provincia + ", fechaNacimiento=" + fechaNacimiento + ", telefonoFijo=" + telefonoFijo + ", telefonoMovil=" + telefonoMovil + ", email=" + email + ", fototipo=" + fototipo + ", sesionesCliente=" + sesionesCliente + ", tipoCliente=" + tipoCliente + '}';
+        return "Cliente{" + "id=" + id + ", codigoBarras=" + codigoBarras + ", nombre=" + nombre + ", apellidos=" + apellidos + ", nif=" + nif + ", direccion=" + direccion + ", codigoPostal=" + codigoPostal + ", localidad=" + localidad + ", provincia=" + provincia + ", fechaNacimiento=" + fechaNacimiento + ", telefonoFijo=" + telefonoFijo + ", telefonoMovil=" + telefonoMovil + ", email=" + email + ", sesionesCliente=" + sesionesCliente  + '}';
     }
 
 }

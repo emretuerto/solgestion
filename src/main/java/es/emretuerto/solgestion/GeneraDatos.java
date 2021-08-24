@@ -24,6 +24,8 @@ import es.emretuerto.solgestion.modelo.TipoCliente;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -105,7 +107,7 @@ public class GeneraDatos {
     public void generarBonos() {
 
         Bono bono1 = new Bono("0001", null, true, null, 600);
-        Bono bono2 = new Bono("0002", null, false, 30.0, null);
+        Bono bono2 = new Bono("0002", null, false, 30, null);
 
         bonoDao.save(bono1);
         bonoDao.save(bono2);
@@ -140,8 +142,8 @@ public class GeneraDatos {
     public void generarClientes() {
     	
 
-        Cliente cliente1 = new Cliente("0003", null, "EDUARDO", "MARTINEZ RETUERTO", "13155641P", "SAN LUIS", "39010", "SANTANDER", "CANTABRIA", LocalDate.of(1973, Month.APRIL, 6), "942000000", "615303890", "emretuerto@gmail.com", fototipoDao.getOne(3), null, tipoClienteDao.getOne(1), bonoDao.getOne(1));
-        Cliente cliente2 = new Cliente("0004", null, "CRISTINA", "DE LA VEGA SANTOS", "20203178T", "SAN LUIS", "39010", "SANTANDER", "CANTABRIA",LocalDate.of(1975, Month.JUNE, 21), "942999999", "635471840", "cgevasantos@gmail.com", fototipoDao.getOne(3), null, tipoClienteDao.getOne(2), bonoDao.getOne(2));
+        Cliente cliente1 = new Cliente("0160141010208476", "EDUARDO", "MARTINEZ RETUERTO", "13155641P", "SAN LUIS", "39010", "SANTANDER", "CANTABRIA", LocalDate.of(1973, 4, 6), "942000000", "615303890", "emretuerto@gmail.com", fototipoDao.getOne(3), null, tipoClienteDao.getOne(1), bonoDao.getOne(1));
+        Cliente cliente2 = new Cliente("0160141010208477", "CRISTINA", "DE LA VEGA SANTOS", "20203178T", "SAN LUIS", "39010", "SANTANDER", "CANTABRIA",LocalDate.of(1975, 6, 21), "942999999", "635471840", "cgevasantos@gmail.com", fototipoDao.getOne(3), null, tipoClienteDao.getOne(2), bonoDao.getOne(2));
 
         clienteDao.save(cliente1);
         clienteDao.save(cliente2);
