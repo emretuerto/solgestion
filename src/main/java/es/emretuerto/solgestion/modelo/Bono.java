@@ -18,6 +18,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 /**
  *
@@ -36,8 +38,11 @@ public class Bono implements Serializable {
     private Integer id;
 
     @Column(name = "IDENTIFICADOR_BONO", length = 10, nullable = false, unique = true)
+    @NotBlank
+    @Pattern(regexp = "[0-9]{4}", message = "Introduzca un código de 4 dígitos numericos")
     private String identificadorBono;
-
+    
+    @Pattern(regexp = "[0-9]{0,20}", message = "Introduzca sólo digitos numéricos")
     @Column(name = "CODIGO_BARRAS", length = 20, unique = true, nullable = true)
     private String codigoBarras;
 

@@ -6,7 +6,13 @@
 package es.emretuerto.solgestion.dao;
 
 import es.emretuerto.solgestion.dto.ClienteDTO;
+import es.emretuerto.solgestion.modelo.Bono;
 import es.emretuerto.solgestion.modelo.Cliente;
+
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
@@ -18,7 +24,19 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
     
     ClienteDTO findClienteDTOByNif(String nif);
     
+    Cliente findClienteByCodigoBarras(String codigo);
     
+    public Page<Cliente> findAll(Pageable pageable);
+    
+    Cliente findById(int id);
+    
+    public Page<Cliente> findAllByOrderByNombre(Pageable pageable);
+    
+    public List<Cliente> findAllByOrderByNombre();
+    
+    public Cliente findByNif(String nif);
+    
+    public List<Cliente> findByBono(Bono bono);
     
     
 }

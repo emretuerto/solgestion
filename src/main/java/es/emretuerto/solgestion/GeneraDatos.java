@@ -23,9 +23,6 @@ import es.emretuerto.solgestion.modelo.Potencia;
 import es.emretuerto.solgestion.modelo.TipoCliente;
 
 import java.time.LocalDate;
-import java.time.Month;
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -80,13 +77,10 @@ public class GeneraDatos {
 
     public void generaLamparas() {
 
-        Potencia potencia1 = potenciaDao.getOne(1);
-        //   Potencia potencia1 = potenciaDao.findOne(1);
-        Lampara lampara1 = new Lampara("0001", "Sylvania", "Purebronce 100 1.2", 800, 17.5d, potencia1);
-        Potencia potencia2 = potenciaDao.getOne(2);
-        Lampara lampara2 = new Lampara("0002", "Sylvania", "CaralSol", 1000, 25.5d, potencia2);
-        Potencia potencia3 = potenciaDao.getOne(6);
-        Lampara lampara3 = new Lampara("0003", "Sylvania", "Chamuscator", 2800, 140.99d, potencia3);
+
+        Lampara lampara1 = new Lampara("0001", "Sylvania", "Purebronce 100 1.2", 800);
+        Lampara lampara2 = new Lampara("0002", "Sylvania", "CaralSol", 1000);
+        Lampara lampara3 = new Lampara("0003", "Sylvania", "Chamuscator", 2800);
 
         lamparaDao.save(lampara1);
         lamparaDao.save(lampara2);
@@ -142,8 +136,8 @@ public class GeneraDatos {
     public void generarClientes() {
     	
 
-        Cliente cliente1 = new Cliente("0160141010208476", "EDUARDO", "MARTINEZ RETUERTO", "13155641P", "SAN LUIS", "39010", "SANTANDER", "CANTABRIA", LocalDate.of(1973, 4, 6), "942000000", "615303890", "emretuerto@gmail.com", fototipoDao.getOne(3), null, tipoClienteDao.getOne(1), bonoDao.getOne(1));
-        Cliente cliente2 = new Cliente("0160141010208477", "CRISTINA", "DE LA VEGA SANTOS", "20203178T", "SAN LUIS", "39010", "SANTANDER", "CANTABRIA",LocalDate.of(1975, 6, 21), "942999999", "635471840", "cgevasantos@gmail.com", fototipoDao.getOne(3), null, tipoClienteDao.getOne(2), bonoDao.getOne(2));
+        Cliente cliente1 = new Cliente("0160141010208476", "EDUARDO", "MARTINEZ RETUERTO", "13155641P", "SAN LUIS", "39010", "SANTANDER", "CANTABRIA", LocalDate.of(1973, 4, 6), "942000000", "615303890", "emretuerto@gmail.com",  bonoDao.getOne(1), true);
+        Cliente cliente2 = new Cliente("0160141010208477", "CRISTINA", "DE LA VEGA SANTOS", "20203178T", "SAN LUIS", "39010", "SANTANDER", "CANTABRIA",LocalDate.of(1975, 6, 21), "942999999", "635471840", "cgevasantos@gmail.com", bonoDao.getOne(2), true);
 
         clienteDao.save(cliente1);
         clienteDao.save(cliente2);

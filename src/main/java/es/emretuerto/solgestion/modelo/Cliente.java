@@ -3,7 +3,6 @@ package es.emretuerto.solgestion.modelo;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +14,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -37,15 +40,21 @@ public class Cliente implements Serializable {
   //  @Column(name = "CODIGO_CLIENTE", length = 10, nullable = false, unique = true)
   //  private String codigoCliente;
 
+    @NotBlank
+    @Pattern(regexp = "[0-9]{0,20}", message = "Error código de barras!!")
     @Column(name = "CODIGO_BARRAS", length = 20, unique = true, nullable = false)
     private String codigoBarras;
 
+    @NotBlank
     @Column(name = "NOMBRE", length = 30, nullable = false)
     private String nombre;
 
+    @NotBlank
     @Column(name = "APELLIDOS")
     private String apellidos;
 
+    @NotBlank
+    @Pattern(regexp = "[0-9]{6,8}[A-Z,a-z]{1}", message = "¡DNI no válido!")
     @Column(name = "NIF", length = 10, unique = true, nullable = false)
     private String nif;
 
@@ -64,12 +73,16 @@ public class Cliente implements Serializable {
     @Column(name = "FECHA_NACIMIENTO", columnDefinition = "DATE")
     private LocalDate fechaNacimiento;
 
+    @Pattern(regexp = "[0-9]{0,9}", message = "Error en el número de teléfono")
     @Column(name = "TELEFONO_FIJO", length = 9)
     private String telefonoFijo;
 
+    @Pattern(regexp = "[0-9]{0,9}", message = "Error en el número de teléfono")
     @Column(name = "TELEFONO_MOVIL", length = 9)
     private String telefonoMovil;
-
+    
+    //@Pattern(regexp = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$", message = "E-mail no válido")
+    @Email
     @Column(name = "EMAIL")
     private String email;
 
@@ -91,30 +104,36 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "BONO_ID")
     @Cascade(CascadeType.ALL)
     private Bono bono;
+    
+    private boolean activo;
 
     public Cliente() {
     }
 
-    public Cliente(String codigoBarras, String nombre, String apellidos, String nif, String direccion, String codigoPostal, String localidad, String provincia, LocalDate fechaNacimiento, String telefonoFijo, String telefonoMovil, String email, Fototipo fototipo, List<Sesion> sesionesCliente, TipoCliente tipoCliente, Bono bono) {
-        this.codigoBarras = codigoBarras;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.nif = nif;
-        this.direccion = direccion;
-        this.codigoPostal = codigoPostal;
-        this.localidad = localidad;
-        this.provincia = provincia;
-        this.fechaNacimiento = fechaNacimiento;
-        this.telefonoFijo = telefonoFijo;
-        this.telefonoMovil = telefonoMovil;
-        this.email = email;
-      //  this.fototipo = fototipo;
-        this.sesionesCliente = sesionesCliente;
-     //   this.tipoCliente = tipoCliente;
-        this.bono = bono;
-    }
+    
 
-    public Integer getId() {
+    public Cliente(String codigoBarras, String nombre, String apellidos, String nif, String direccion,
+			String codigoPostal, String localidad, String provincia, LocalDate fechaNacimiento, String telefonoFijo,
+			String telefonoMovil, String email,  Bono bono, boolean activo) {
+		this.codigoBarras = codigoBarras;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.nif = nif;
+		this.direccion = direccion;
+		this.codigoPostal = codigoPostal;
+		this.localidad = localidad;
+		this.provincia = provincia;
+		this.fechaNacimiento = fechaNacimiento;
+		this.telefonoFijo = telefonoFijo;
+		this.telefonoMovil = telefonoMovil;
+		this.email = email;
+		this.bono = bono;
+		this.activo = activo;
+	}
+
+
+
+	public Integer getId() {
         return id;
     }
 
@@ -267,8 +286,22 @@ public class Cliente implements Serializable {
             sesion.setCliente(null);
         }
     }
+    
+    
 
-    @Override
+    public boolean isActivo() {
+		return activo;
+	}
+
+
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+
+
+
+	@Override
     public String toString() {
         return "Cliente{" + "id=" + id + ", codigoBarras=" + codigoBarras + ", nombre=" + nombre + ", apellidos=" + apellidos + ", nif=" + nif + ", direccion=" + direccion + ", codigoPostal=" + codigoPostal + ", localidad=" + localidad + ", provincia=" + provincia + ", fechaNacimiento=" + fechaNacimiento + ", telefonoFijo=" + telefonoFijo + ", telefonoMovil=" + telefonoMovil + ", email=" + email + ", sesionesCliente=" + sesionesCliente  + '}';
     }

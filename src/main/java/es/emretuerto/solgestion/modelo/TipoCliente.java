@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 /**
@@ -25,12 +25,12 @@ public class TipoCliente  implements Serializable{
     private Integer id;
 
     @Column(name = "CODIGO", length = 4, nullable = false, unique = true)
-    @NotEmpty
+    @NotBlank
     @Pattern(regexp = "[0-9]{4}", message = "Introduzca un código de 4 dígitos numericos")
     private String codigo;
 
     @Column(name = "DESCRIPCION", length = 60)
-    @NotEmpty
+    @NotBlank
     private String descripcion;
     
     @Column(name = "ACTIVO")

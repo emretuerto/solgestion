@@ -1,16 +1,14 @@
 package es.emretuerto.solgestion.servicios.impl;
 
-import es.emretuerto.solgestion.auxiliares.MapperFactory;
-import es.emretuerto.solgestion.auxiliares.MapperInterface;
 import es.emretuerto.solgestion.dao.ClienteRepository;
-import es.emretuerto.solgestion.dto.ClienteDTO;
-import es.emretuerto.solgestion.excepciones.MappingException;
+import es.emretuerto.solgestion.modelo.Bono;
 import es.emretuerto.solgestion.modelo.Cliente;
 import es.emretuerto.solgestion.servicios.ClienteServicioInterface;
-import java.util.Locale;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,28 +20,79 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ClienteServicioImpl implements ClienteServicioInterface {
 
-    private final MapperInterface MAPPER = MapperFactory.getInstance(Locale.GERMAN);
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClienteServicioImpl.class);
 
-    @Autowired
-    ClienteRepository clienteDao;
-
-    @Override
-    public void altaCliente(ClienteDTO clienteDTO) {
-        Cliente cliente = new Cliente();
-        try {
-            cliente = MAPPER.map(Cliente.class, clienteDTO);
-
-        } catch (MappingException e) {
-        }
-        clienteDao.save(cliente);
-    }
+	@Autowired
+	ClienteRepository clienteDao;
 
 
 	@Override
 	public void insertar(Cliente cliente) {
-		clienteDao.save(cliente);
-		
+		clienteDao.saveAndFlush(cliente);
+
 	}
 
+	@Override
+	public Cliente buscarPorCodigoBarras(String codigo) {
+
+		Cliente cliente = clienteDao.findClienteByCodigoBarras(codigo);
+		return cliente;
+
+	}
+
+	@Override
+	public List<Cliente> listado() {
+		List<Cliente> listadoClientes = clienteDao.findAll();
+		return listadoClientes;
+	}
+
+	@Override
+	public Page<Cliente> listadoClientes(Pageable pageable) {
+
+		Page<Cliente> listadoClientes = clienteDao.findAll(pageable);
+		return listadoClientes;
+	}
+
+	@Override
+	public Cliente findById(int id) {
+		Cliente cliente = clienteDao.findById(id);
+		return cliente;
+	}
+
+	@Override
+	public void borrar(Cliente cliente) {
+		clienteDao.delete(cliente);
+
+	}
+
+	@Override
+	public Page<Cliente> listadoOrdenadoPorNombreClientes(Pageable pageable) {
+		Page<Cliente> listadoClientesOrdenadoPorNombre = clienteDao.findAllByOrderByNombre(pageable);
+		return listadoClientesOrdenadoPorNombre;
+	}
+
+	@Override
+	public List<Cliente> listadoOrdenadoPorNombre() {
+		List<Cliente> listadoClientes = clienteDao.findAllByOrderByNombre();
+		return listadoClientes;
+	}
+	
+	@Override
+	public boolean existeCliente(String nif) {
+
+		return (clienteDao.findByNif(nif)!=null);
+	}
+
+	@Override
+	public List<Cliente> listadoClientesBono(Bono bono) {
+	return clienteDao.findByBono(bono);
+	}
+
+	@Override
+	public void desasociaBono(Cliente cliente) {
+	
+		cliente.setBono(null);
+		
+	}
+	
+	
 }

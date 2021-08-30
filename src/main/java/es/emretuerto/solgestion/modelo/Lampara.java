@@ -11,10 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.Cascade;
+
 
 /**
  *
@@ -43,6 +41,7 @@ public class Lampara implements Serializable {
     @Column(name = "DURACION", nullable = false)
     private Integer duracion;
 
+    /*
     @Column(name = "PRECIO")
     private Double precio;
 
@@ -51,18 +50,17 @@ public class Lampara implements Serializable {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Potencia potencia;
     
-    
+  */  
 
     public Lampara() {
     }
 
-    public Lampara(String codigo, String marca, String modelo, Integer duracion, Double precio, Potencia potencia) {
+    public Lampara(String codigo, String marca, String modelo, Integer duracion) {
         this.codigo = codigo;
         this.marca = marca;
         this.modelo = modelo;
         this.duracion = duracion;
-        this.precio = precio;
-        this.potencia = potencia;
+       
     }
 
     
@@ -99,14 +97,6 @@ public class Lampara implements Serializable {
         this.modelo = modelo;
     }
 
-    public Potencia getPotencia() {
-        return potencia;
-    }
-
-    public void setPotencia(Potencia potencia) {
-        this.potencia = potencia;
-    }
-
     public Integer getDuracion() {
         return duracion;
     }
@@ -115,17 +105,12 @@ public class Lampara implements Serializable {
         this.duracion = duracion;
     }
 
-    public Double getPrecio() {
-        return precio;
-    }
+	@Override
+	public String toString() {
+		return "Lampara [id=" + id + ", codigo=" + codigo + ", marca=" + marca + ", modelo=" + modelo + ", duracion="
+				+ duracion + "]";
+	}
 
-    public void setPrecio(Double precio) {
-        this.precio = precio;
-    }
 
-    @Override
-    public String toString() {
-        return "Tubo{" + "codigo=" + codigo + ", marca=" + marca + ", modelo=" + modelo + ", duracion=" + duracion + ", precio=" + precio + ", potencia=" + potencia + '}';
-    }
 
 }

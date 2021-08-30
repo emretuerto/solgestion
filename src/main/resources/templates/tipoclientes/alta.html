@@ -8,6 +8,10 @@
 
 </head>
 <body>
+<nav th:replace="/plantillas/menucabecera :: menu"></nav>
+	<div class="container">
+		<h1 th:text="'Alta tipo clientes'"
+			class="text-dark border border-success border-top-0 border-left-0 border-right-0"></h1>
 	<form role="form" th:action="@{/tipoclientes/alta}"
 		th:object="${tipoCliente}" method="post">
 		<div class="container">

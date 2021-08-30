@@ -5,7 +5,10 @@
  */
 package es.emretuerto.solgestion.servicios;
 
+import java.util.List;
+
 import es.emretuerto.solgestion.modelo.Bono;
+import es.emretuerto.solgestion.modelo.Cliente;
 
 /**
  *
@@ -20,4 +23,11 @@ public interface BonoServicioInterface {
     public void restarMinutosBono (Bono bono, Integer minutos);
     
     // public void restarSesionesBono (Bono bono, Integer sesiones);
+    
+    public void asocia (Bono bono, Cliente cliente);
+    
+    public List<Cliente> listadoClientesBono(Bono bono);
+    
+    public Boolean exiteBono(String codigo);
+    
 }
