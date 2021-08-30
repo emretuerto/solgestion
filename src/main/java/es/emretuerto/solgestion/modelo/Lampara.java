@@ -12,6 +12,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 
 /**
@@ -29,6 +34,8 @@ public class Lampara implements Serializable {
     @Column(name = "ID")
     private Integer id;
 
+    @NotBlank
+    @Pattern(regexp = "[0-9]{4}", message = "Introduzca un código de 4 dígitos numericos")
     @Column(name = "CODIGO", length = 30, nullable = false, unique = true)
     private String codigo;
 
@@ -38,6 +45,9 @@ public class Lampara implements Serializable {
     @Column(name = "MODELO", length = 30, nullable = false)
     private String modelo;
 
+    @NotNull
+    @Min(value=0, message = "Introduzca un dato válido" )
+    @Digits(fraction = 0, integer = 10, message ="Introduzca un dato válido")
     @Column(name = "DURACION", nullable = false)
     private Integer duracion;
 

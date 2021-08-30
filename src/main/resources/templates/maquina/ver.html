@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>SOLGESTION</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+
+</head>
+<body>
+	<nav th:replace="/plantillas/menucabecera :: menu"></nav>
+	<div class="container">
+		<h1 th:text="'Datos Máquina'"
+			class="text-dark border border-success border-top-0 border-left-0 border-right-0"></h1>
+		<form role="form" th:action="@{/maquina/actualizar}"
+			th:object="${maquina}" method="post">
+			<div class="container">
+				<div>
+					<div class="row align-items-end">
+						<div class="form-group col-sm-3 row">
+							<label for="codigo">Código</label> <input type="text"
+								autocomplete="nope" th:field="*{identificador}"
+								id="identificador" class="form-control">
+						</div>
+						<small th:if="${#fields.hasErrors('identificador')}"
+							th:errors="*{identificador}" class="alert alert-danger col-sm-6"></small>
+
+					</div>
+				</div>
+				<div class="row align-items-end">
+					<div class="form-group col-sm-2 row">
+						<label for="codigo">Nombre</label> <input type="text"
+							autocomplete="nope" th:field="*{nombre}" id="nombre"
+							class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"
+						class="alert alert-danger col-sm-6"></small>
+
+					<div class="form-group col-sm-3 row">
+						<label for="codigo">Marca</label> <input type="text"
+							autocomplete="nope" th:field="*{marca}" id="marca"
+							class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('marca')}" th:errors="*{marca}"
+						class="alert alert-danger col-sm-6"></small>
+
+					<div class="form-group col-sm-3 row">
+						<label for="codigo">Modelo</label> <input type="text"
+							autocomplete="nope" th:field="*{modelo}" id="modelo"
+							class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('modelo')}" th:errors="*{modelo}"
+						class="alert alert-danger col-sm-6"></small>
+
+					<div class="form-group col-sm-2 row">
+						<label for="codigo">Contador Total</label> <input type="number"
+							autocomplete="nope" th:field="*{contadorTotal}"
+							id="contadorTotal" class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('contadorTotal')}"
+						th:errors="*{contadorTotal}" class="alert alert-danger col-sm-6"></small>
+
+					<div class="form-group col-sm-2 row">
+						<label for="codigo">Contador Parcial</label> <input type="number"
+							autocomplete="nope" th:field="*{contadorParcial}"
+							id="contadorParcial" class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('contadorParcial')}"
+						th:errors="*{contadorParcial}" class="alert alert-danger col-sm-6"></small>
+
+					<div>
+						<input type="hidden" th:field="*{id}" id="id">
+					</div>
+				</div>
+			</div>
+		</form>
+		<div th:if="${maquina.lampara}">
+			<table
+				class="table table-striped table-bordered table-hover table-dark table-sm h-50">
+				<H4>Lámparas Instaladas</H4>
+
+				<thead>
+					<tr>
+
+						<th class="text-secondary col-1">Código</th>
+						<th class="text-secondary col-4">Marca</th>
+						<th class="text-secondary col-1">Modelo</th>
+						<th class="text-secondary col-1">Duración pendiente</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+
+						<td class="col-1 align-middle" th:text="${maquina.lampara.codigo}"></td>
+						<td class="col-4 align-middle" th:text="${maquina.lampara.marca"></td>
+						<td class="col-2 align-middle" th:text="${maquina.lampara.modelo}"></td>
+						<td class="col-1 align-middle" th:text="${maquina.lampara.duracion}"></td>
+			</table>
+		</div>
+
+	</div>
+</body>
+</html>

@@ -24,19 +24,19 @@
 						aria-haspopup="true" aria-expanded="false"> Clientes </a>
 						<div class="dropdown-menu"
 							aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="/cliente/alta">Alta</a> <a
+							<a class="dropdown-item" th:href=@{/cliente/alta}>Alta</a> <a
 								class="dropdown-item" th:href=@{/cliente/listado}>Listado</a> <a
 								class="dropdown-item" href="#">Buscar</a>
 
 						</div></li>
 					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="#"
+						class="nav-link dropdown-toggle" th:href=@{/maquina/listado}
 						id="navbarDropdownMenuLink" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false"> Máquinas </a>
 						<div class="dropdown-menu"
 							aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="/bono/alta">Alta</a> <a
-								class="dropdown-item" th:href=@{/bono/listado}>Listado</a> <a
+							<a class="dropdown-item" href="/maquina/alta">Alta</a> <a
+								class="dropdown-item" th:href=@{/maquina/listado}>Listado</a> <a
 								class="dropdown-item" href="#"></a>
 						</div></li>
 					<li class="nav-item dropdown"><a
@@ -50,6 +50,16 @@
 								<a
 								class="dropdown-item" th:href=@{/bono/recarga}>Recarga Bono</a><a
 								class="dropdown-item" th:href=@{/bono/asocia}>Asociar bono</a>
+						</div></li>
+						<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" th:href=@{/lampara/listado}
+						id="navbarDropdownMenuLink" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false"> Lámparas </a>
+						<div class="dropdown-menu"
+							aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="/lampara/alta">Alta</a> <a
+								class="dropdown-item" th:href=@{/lampara/listado}>Listado</a> <a
+								class="dropdown-item" href="#"></a>
 						</div></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#"

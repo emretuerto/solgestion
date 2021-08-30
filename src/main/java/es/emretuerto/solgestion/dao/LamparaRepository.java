@@ -6,6 +6,8 @@
 package es.emretuerto.solgestion.dao;
 
 import es.emretuerto.solgestion.modelo.Lampara;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -13,5 +15,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author emretuerto
  */
 public interface LamparaRepository extends JpaRepository<Lampara, Integer>{
+	
+	
+	public Page<Lampara> findAllByOrderByMarca(Pageable pageable);
       
 }

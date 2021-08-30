@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>SOLGESION</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+</head>
+<body>
+	<nav th:replace="/plantillas/menucabecera :: menu"></nav>
+	<div class="container">
+		<h1 th:text="'Listado  Máquina'"
+			class="text-dark border border-success border-top-0 border-left-0 border-right-0"></h1>
+		<table
+			class="table table-striped table-bordered table-hover table-dark table-sm h-50">
+
+			<thead>
+				<tr>
+
+					<th class="text-secondary col-4">Nombre</th>
+					<th class="text-secondary col-1">Marca</th>
+					<th class="text-secondary col-1">Modelo</th>
+					<th class="text-secondary col-1">Contador Total</th>
+					<th class="text-secondary col-1">Contador Parcial</th>
+					<th class="col-1"></th>
+					<th class="col-1"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="maquina: ${listadoMaquinas}">
+
+					<td class="col-3 align-middle" th:text="${maquina.nombre}"></td>
+					<td class="col-4 align-middle" th:text="${maquina.marca}"></td>
+					<td class="col-4 align-middle" th:text="${maquina.modelo}"></td>
+					<td class="col-1 align-middle" th:text="${maquina.contadorTotal}"></td>
+					<td class="col-1 align-middle" th:text="${maquina.contadorParcial}"></td>
+					<td><a th:href="@{ver/} + ${maquina.id}"
+						th:text="'Ver'" class="btn btn-success btn-xs "></a></td>
+					<td><a th:href="@{instalar/} + ${maquina.id}"
+						th:text="'Lámpara'" class="btn btn-primary btn-xs "></a></td>
+			</tbody>
+		</table>
+		<nav th:replace="/maquina/paginator-nav :: paginator"></nav>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

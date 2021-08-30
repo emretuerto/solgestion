@@ -17,7 +17,6 @@ import es.emretuerto.solgestion.modelo.Bono;
 import es.emretuerto.solgestion.modelo.Cliente;
 import es.emretuerto.solgestion.modelo.Fototipo;
 import es.emretuerto.solgestion.modelo.Lampara;
-import es.emretuerto.solgestion.modelo.LamparaInstalada;
 import es.emretuerto.solgestion.modelo.Maquina;
 import es.emretuerto.solgestion.modelo.Potencia;
 import es.emretuerto.solgestion.modelo.TipoCliente;
@@ -89,9 +88,9 @@ public class GeneraDatos {
 
     public void generarMaquinas() {
 
-        Maquina maquina1 = new Maquina("Cabina 1", "Ergoline", "23/1", 0, 0);
-        Maquina maquina2 = new Maquina("Cabina 2", "Solpasion", "Mega Super", 150, 150);
-        Maquina maquina3 = new Maquina("Cabina 3", "Soltron", "Bronceator", 163, 25);
+        Maquina maquina1 = new Maquina("0001", "Cabina 1", "Ergoline", "23/1", 0, 0);
+        Maquina maquina2 = new Maquina("0002", "Cabina 2", "Solpasion", "Mega Super", 150, 150);
+        Maquina maquina3 = new Maquina("0003","Cabina 3", "Soltron", "Bronceator", 163, 25);
 
         maquinaDao.save(maquina1);
         maquinaDao.save(maquina2);
@@ -143,6 +142,7 @@ public class GeneraDatos {
         clienteDao.save(cliente2);
     }
 
+    /*
     public void generarLamparasInstaladas() {
 
         LamparaInstalada lamparaInstalada1 = new LamparaInstalada(maquinaDao.getOne(1), lamparaDao.getOne(1), 20);
@@ -152,5 +152,5 @@ public class GeneraDatos {
         Maquina maquina = maquinaDao.getOne(2);
         maquina.addLamparaInstalada(lamparaInstalada2);
         maquina.addLamparaInstalada(lamparaInstalada3);
-    }
+    }*/
 }
