@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>SOLGESTION</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+
+</head>
+<body>
+<nav th:replace="/plantillas/menucabecera :: menu"></nav>
+	<div class="container">
+		<h1 th:text="'Alta  bono'"
+			class="text-dark border border-success border-top-0 border-left-0 border-right-0"></h1>
+	<form role="form" th:action="@{/bono/alta}"
+		th:object="${bono}" method="post">
+		<div class="container">
+			<div>
+				<div class="row align-items-end">
+					<div class="form-group col-sm-2 row">
+						<label for="codigo">Código</label> <input type="number"
+							autocomplete="nope" th:field="*{identificadorBono}" id="identificadorBono"
+							class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('identificadorBono')}" th:errors="*{identificadorBono}"
+						class="alert alert-danger col-sm-6"></small>
+
+				</div>
+								<div class="row align-items-end">
+					<div class="form-group col-sm-2 row">
+						<label for="codigo">Código Barras</label> <input type="text"
+							autocomplete="nope" th:field="*{codigoBarras}" id="codigoBarras"
+							class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('codigoBarras')}" th:errors="*{codigoBarras}"
+						class="alert alert-danger col-sm-6"></small>
+
+				</div>
+				<div class="row align-items-end">
+					<div class="form-group col-sm-2 row">
+						<label for="descripción">Minutos</label> <input type="number"
+							th:field="*{minutos}" class="form-control" id="minutos">
+					</div>
+					<small th:if="${#fields.hasErrors('minutos')}"
+						th:errors="*{minutos}" class="alert alert-danger col-sm-6"></small>
+
+				</div>
+				<div class="col-sm-1">
+					<label> </label> <input type="submit" value="Alta"
+						class="btn btn-primary form-control">
+				</div>
+
+			</div>
+			<div>
+				<input type="hidden" th:field="*{id}" id="id">
+			</div>
+		</div>
+	</form>
+	</div>
+</body>
+</html>

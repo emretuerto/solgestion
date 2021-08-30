@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>SOLGESTION</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+
+</head>
+<body>
+	<nav th:replace="/plantillas/menucabecera :: menu"></nav>
+	<div class="container">
+		<h1 th:text="'Actualizar clientes'"
+			class="text-dark border border-success border-top-0 border-left-0 border-right-0"></h1>
+		<form role="form" th:action="@{/cliente/altainicial}"
+			th:object="${cliente}" method="post">
+			<div class="container">
+				<div>
+					<div class="row align-items-end">
+						<div class="form-group col-sm-3 row">
+							<label for="codigo">Código Barras</label> <input type="text"
+								autocomplete="nope" th:field="*{codigoBarras}" id="codigoBarras"
+								class="form-control" readonly>
+						</div>
+						<small th:if="${#fields.hasErrors('codigoBarras')}"
+							th:errors="*{codigoBarras}" class="alert alert-danger col-sm-6"></small>
+
+					</div>
+				</div>
+				<div class="row align-items-end">
+					<div class="form-group col-sm-2 row">
+						<label for="codigo">Nombre</label> <input type="text"
+							autocomplete="nope" th:field="*{nombre}" id="nombre"
+							class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"
+						class="alert alert-danger col-sm-6"></small>
+
+					<div class="form-group col-sm-6 row">
+						<label for="codigo">Apellidos</label> <input type="text"
+							autocomplete="nope" th:field="*{apellidos}" id="apellidos"
+							class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('apellidos')}"
+						th:errors="*{apellidos}" class="alert alert-danger col-sm-6"></small>
+
+					<div class="form-group col-sm-2 row">
+						<label for="codigo">NIF</label> <input type="text"
+							autocomplete="nope" th:field="*{nif}" id="nif"
+							class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('nif')}" th:errors="*{nif}"
+						class="alert alert-danger col-sm-6"></small>
+
+				</div>
+				<div class="row align-items-end">
+					<div class="form-group col-sm-9 row">
+						<label for="codigo">Dirección</label> <input type="text"
+							autocomplete="nope" th:field="*{direccion}" id="direccion"
+							class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('direccion')}"
+						th:errors="*{direccion}" class="alert alert-danger col-sm-6"></small>
+				</div>
+				<div class="row align-items-end">
+					<div class="form-group col-sm-2 row">
+						<label for="codigo">Código Postal</label> <input type="text"
+							autocomplete="nope" th:field="*{codigoPostal}" id="codigoPostal"
+							class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('codigoPostal')}"
+						th:errors="*{codigoPostal}" class="alert alert-danger col-sm-6"></small>
+
+					<div class="form-group col-sm-4 row">
+						<label for="codigo">Localidad</label> <input type="text"
+							autocomplete="nope" th:field="*{localidad}" id="localidad"
+							class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('localidad')}"
+						th:errors="*{localidad}" class="alert alert-danger col-sm-6"></small>
+
+					<div class="form-group col-sm-4 row">
+						<label for="codigo">Provincia</label> <input type="text"
+							autocomplete="nope" th:field="*{provincia}" id="provincia"
+							class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('provincia')}"
+						th:errors="*{provincia}" class="alert alert-danger col-sm-6"></small>
+
+				</div>
+				<div class="row align-items-end">
+					<div class="form-group col-sm-2 row">
+						<label for="codigo">Fecha de nacimiento</label> <input type="date"
+							autocomplete="nope" th:field="*{fechaNacimiento}"
+							id="fechaNacimiento" class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('fechaNacimiento')}"
+						th:errors="*{fechaNacimiento}" class="alert alert-danger col-sm-6"></small>
+
+					<div class="form-group col-sm-2 row">
+						<label for="codigo">Teléfono Fijo</label> <input type="text"
+							autocomplete="nope" th:field="*{telefonoFijo}" id="telefonoFijo"
+							class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('telefonoFijo')}"
+						th:errors="*{telefonoFijo}" class="alert alert-danger col-sm-6"></small>
+
+					<div class="form-group col-sm-2 row">
+						<label for="codigo">Teléfono Móvil</label> <input type="text"
+							autocomplete="nope" th:field="*{telefonoMovil}"
+							id="telefonoMovil" class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('telefonoMovil')}"
+						th:errors="*{telefonoMovil}" class="alert alert-danger col-sm-6"></small>
+
+					<div class="form-group col-sm-4 row">
+						<label for="codigo">e-mail</label> <input type="text"
+							autocomplete="nope" th:field="*{email}" id="email"
+							class="form-control">
+					</div>
+					<small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+						class="alert alert-danger col-sm-6"></small>
+
+				</div>
+
+				<div class="row align-items-end"></div>
+				<div class="col-sm-2">
+					<label> </label> <input type="submit" value="Actualizar"
+						class="btn btn-primary form-control">
+				</div>
+
+
+				<div>
+					<input type="hidden" th:field="*{id}" id="id">
+					<input type="hidden" th:field="*{bono}" id="bono">
+				</div>
+			</div>
+		</form>
+		<div th:if="${cliente.bono}">
+			<table
+				class="table table-striped table-bordered table-hover table-dark table-sm h-50">
+				<H4>Bono Asociado</H4>
+
+				<thead>
+					<tr>
+
+						<th class="text-secondary col-1">Código</th>
+						<th class="text-secondary col-4">Código Barras</th>
+						<th class="text-secondary col-1">Minutos</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+
+						<td class="col-1 align-middle"
+							th:text="${cliente.bono.identificadorBono}"></td>
+						<td class="col-9 align-middle"
+							th:text="${cliente.bono.codigoBarras}"></td>
+						<td class="col-9 align-middle" th:text="${cliente.bono.minutos}"></td>
+						<td><a th:href="@{recargar/} + ${cliente.bono.id}"
+							th:text="'Recargar'" class="btn btn-danger btn-xs"></a></td>
+					</tr>
+			</table>
+		</div>
+</body>
+</html>

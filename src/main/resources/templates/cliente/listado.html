@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>SOLGESION</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+</head>
+<body>
+	<nav th:replace="/plantillas/menucabecera :: menu"></nav>
+	<div class="container">
+		<h1 th:text="'Listado clientes'"
+			class="text-dark border border-success border-top-0 border-left-0 border-right-0"></h1>
+		<table
+			class="table table-striped table-bordered table-hover table-dark table-sm h-50">
+
+			<thead>
+				<tr>
+
+					<th class="text-secondary col-1">Código</th>
+					<th class="text-secondary col-3">Nombre</th>
+					<th class="text-secondary col-9">Apellidos</th>
+					<th class="text-secondary col-3">DNI</th>
+					<th class="col-1"></th>
+					<th class="col-1"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="cliente: ${listadoClientes}">
+
+					<td class="col-1 align-middle" th:text="${cliente.codigoBarras}"></td>
+					<td class="col-2 align-middle" th:text="${cliente.nombre}"></td>
+					<td class="col-3 align-middle" th:text="${cliente.apellidos}"></td>
+					<td class="col-4 align-middle" th:text="${cliente.nif}"></td>
+					<td><a th:href="@{ver/} + ${cliente.id}" th:text="'Editar'"
+						class="btn btn-primary btn-xs "></a></td>
+					<td><a th:href="@{eliminar/} + ${cliente.id}"
+						th:text="'Borrar'" class="btn btn-danger btn-xs"
+						onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
+				</tr>
+
+			</tbody>
+		</table>
+		<nav th:replace="/cliente/paginator-nav :: paginator"></nav>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

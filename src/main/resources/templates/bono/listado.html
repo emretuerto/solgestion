@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>SOLGESION</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+</head>
+<body>
+	<nav th:replace="/plantillas/menucabecera :: menu"></nav>
+	<div class="container">
+		<h1 th:text="'Listado  bonos'"
+			class="text-dark border border-success border-top-0 border-left-0 border-right-0"></h1>
+		<table
+			class="table table-striped table-bordered table-hover table-dark table-sm h-50">
+
+			<thead>
+				<tr>
+
+					<th class="text-secondary col-1">Código</th>
+					<th class="text-secondary col-4">Código de Barras</th>
+					<th class="text-secondary col-1">Minutos</th>
+					<th class="col-1"></th>
+					<th class="col-1"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="bono: ${listadoBono}">
+
+					<td class="col-1 align-middle" th:text="${bono.identificadorBono}"></td>
+					<td class="col-9 align-middle" th:text="${bono.codigoBarras}"></td>
+					<td class="col-9 align-middle" th:text="${bono.minutos}"></td>
+					<td><a th:href="@{ver/} + ${bono.id}" th:text="'Editar'"
+						class="btn btn-primary btn-xs "></a></td>
+					<td><a th:href="@{eliminar/} + ${bono.id}" th:text="'Borrar'"
+						class="btn btn-danger btn-xs"
+						onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
+				</tr>
+
+			</tbody>
+		</table>
+		<nav th:replace="/bono/paginator-nav :: paginator"></nav>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+package es.emretuerto.solgestion.controllers;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.support.SessionStatus;
+
+import es.emretuerto.solgestion.auxiliares.PageRender;
+import es.emretuerto.solgestion.auxiliares.anotaciones.auxiliarDatos;
+import es.emretuerto.solgestion.modelo.Cliente;
+import es.emretuerto.solgestion.modelo.Fototipo;
+import es.emretuerto.solgestion.modelo.TipoCliente;
+import es.emretuerto.solgestion.servicios.ClienteServicioInterface;
+import es.emretuerto.solgestion.servicios.FototipoServicioInterface;
+import es.emretuerto.solgestion.servicios.TipoClienteServicioInterface;
+
+@Controller
+@RequestMapping("/cliente")
+public class ClienteController_COPIA {
+
+	final Logger LOG = Logger.getLogger("ClienteController.class");
+	
+	@Autowired
+	ClienteServicioInterface clienteServicio;
+	
+	@Autowired
+	TipoClienteServicioInterface tipoClienteServicio;
+
+	@Autowired
+	FototipoServicioInterface fototipoServicio;
+	
+	
+	@GetMapping("/altainicial")
+	public String alta(Cliente cliente, Model model) {
+
+		int idtipo=0,idfototipo=0;
+		List<Fototipo> listadoFototipos = new ArrayList<>();
+		listadoFototipos = fototipoServicio.listadoFototipos();
+		model.addAttribute("listadoFototipos", listadoFototipos);
+		
+		List<TipoCliente> listadoTipoClientes = new ArrayList<>();
+		listadoTipoClientes = tipoClienteServicio.listarTiposClienteActivos(true);
+		model.addAttribute("listadoTipoClientes", listadoTipoClientes);
+		model.addAttribute("cliente", cliente);
+		model.addAttribute("idtipo", idtipo);
+		model.addAttribute("idfototipo", idfototipo);
+
+		return "cliente/altainicial";
+	}
+	
+
+	@PostMapping("/altainicial")
+	public String procesarAlta(@Valid Cliente cliente, BindingResult result, Model model, SessionStatus status) {
+
+		LOG.info("Entramos en el controlador formulario alta");
+
+		
+		LOG.info(model.toString());
+		
+		clienteServicio.insertar(cliente);
+		status.setComplete();
+		return "cliente/alta";
+	}
+	
+	
+
+	@GetMapping("/alta")
+	public String altaInicial(auxiliarDatos datos, Model model) {
+
+		LOG.info("Parece que ha llegado bien");
+		model.addAttribute("datos", datos);
+
+		return "cliente/alta";
+	}
+	
+
+	@PostMapping("/alta")
+	public String altaInicialEnvio(auxiliarDatos datos, Model model) {
+
+		Cliente cliente;
+		LOG.info("hARÁ LO QUE TIENEN QUE HACER???");
+		LOG.info(model.toString());
+		try {
+		
+			LOG.info("ENtra a buscar el cliente por código de barras");
+			cliente = clienteServicio.buscarPorCodigoBarras(datos.getDato1());
+			model.addAttribute("cliente", cliente);
+		
+		LOG.info(cliente.toString());
+		model.addAttribute("cliente", cliente);
+		}catch (Exception e) {
+			LOG.info("No ha encontrado en cliente");
+			cliente = new Cliente();
+			cliente.setCodigoBarras(datos.getDato1());
+			model.addAttribute("cliente", cliente);
+			return "cliente/altainicial";
+			
+		}
+
+		return "cliente/actualizar";
+	}
+	
+	
+	@GetMapping("/listado")
+	public String listarClientes(@RequestParam(name="page", defaultValue = "0") int page,Model model) {
+		
+		
+		List<Cliente> listadoClientes = new ArrayList<>();
+		listadoClientes = clienteServicio.listado();
+		model.addAttribute("listadoClientes", listadoClientes);
+		
+		Pageable pageRequest = PageRequest.of(page, 9);
+		Page<Cliente> clientes = clienteServicio.listadoClientes(pageRequest);
+		PageRender<Cliente> pageRender= new PageRender<>("/clientes/listado", clientes); 
+		
+		model.addAttribute("listadoClientes", clientes);
+		model.addAttribute("page", pageRender);
+
+	
+		
+		return "/cliente/listado";
+
+	}
+	
+	
+	@GetMapping("ver/{id}")
+	public String editarCliente(@PathVariable int id, Model model) {
+		
+		LOG.info("Busqueda de cliente por el id");
+		Cliente cliente = clienteServicio.findById(id);
+		LOG.info(cliente.toString());
+		model.addAttribute("Cliente", cliente);
+		return "cliente/altainicial";
+	}
+	
+	
+}
+	

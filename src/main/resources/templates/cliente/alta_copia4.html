@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>SOLGESTION</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+
+</head>
+<body>
+	<form role="form" th:action="@{/cliente/alta}" th:object="${datos}"
+		method="post">
+		<div class="container">
+			<div>
+				<div class="row align-items-end">
+					<div class="form-group col-sm-3 row">
+						<label for="codigo">Código Barras</label> <input type="text"
+							autocomplete="nope" th:field="*{dato1}" id="dato1"
+							class="form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row align-items-end"></div>
+		<div class="col-sm-1">
+			<label> </label> <input type="submit" value="Alta"
+				class="btn btn-primary form-control">
+		</div>
+	</form>
+</body>
+</html>
