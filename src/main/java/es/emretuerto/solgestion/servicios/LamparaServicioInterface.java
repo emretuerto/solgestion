@@ -16,4 +16,7 @@ public interface LamparaServicioInterface {
 	
 	public List<Lampara> listadoLamparas();
 
+	public boolean existe(String codigo);
+	
+	public Lampara buscaPorCodigo(String codigo);
 }

@@ -6,11 +6,15 @@
 package es.emretuerto.solgestion.modelo;
 
 import java.io.Serializable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -64,12 +68,25 @@ public class Maquina implements Serializable {
 	@Column(name = "LAMPARAINSTALADA_ID")
 	private List<LamparaInstalada> lamparasInstaladas = new ArrayList<LamparaInstalada>();
 
-*/
-	@Column(name="LAMPARA")
+*/  
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ID_LAMPARA", updatable = false)
 	private Lampara lampara;
 
-public Maquina(String identificador,String nombre, String marca, String modelo, @NotNull Integer contadorTotal,
-		Integer contadorParcial) {
+public Maquina(Integer id,
+		@NotBlank @Pattern(regexp = "[0-9]{4}", message = "Introduzca un código de 4 dígitos numericos") String identificador,
+		@NotBlank String nombre, String marca, String modelo, @NotNull Integer contadorTotal, Integer contadorParcial,
+		Lampara lampara) {
+	this.id = id;
+	this.identificador = identificador;
+	this.nombre = nombre;
+	this.marca = marca;
+	this.modelo = modelo;
+	this.contadorTotal = contadorTotal;
+	this.contadorParcial = contadorParcial;
+	this.lampara = lampara;
+}
+public Maquina(String identificador, String nombre, String marca, String modelo,Integer contadorTotal, Integer contadorParcial) {
 	this.identificador = identificador;
 	this.nombre = nombre;
 	this.marca = marca;
@@ -77,106 +94,86 @@ public Maquina(String identificador,String nombre, String marca, String modelo, 
 	this.contadorTotal = contadorTotal;
 	this.contadorParcial = contadorParcial;
 }
-	
 
-	
-	public Maquina() {}
+public Maquina() {
 
+}
 
-	public Integer getId() {
-		return id;
-	}
+public Integer getId() {
+	return id;
+}
 
+public void setId(Integer id) {
+	this.id = id;
+}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+public String getIdentificador() {
+	return identificador;
+}
 
+public void setIdentificador(String identificador) {
+	this.identificador = identificador;
+}
 
-	public String getIdentificador() {
-		return identificador;
-	}
+public String getNombre() {
+	return nombre;
+}
 
+public void setNombre(String nombre) {
+	this.nombre = nombre;
+}
 
-	public void setIdentificador(String identificador) {
-		this.identificador = identificador;
-	}
+public String getMarca() {
+	return marca;
+}
 
+public void setMarca(String marca) {
+	this.marca = marca;
+}
 
-	public String getNombre() {
-		return nombre;
-	}
+public String getModelo() {
+	return modelo;
+}
 
+public void setModelo(String modelo) {
+	this.modelo = modelo;
+}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+public Integer getContadorTotal() {
+	return contadorTotal;
+}
 
+public void setContadorTotal(Integer contadorTotal) {
+	this.contadorTotal = contadorTotal;
+}
 
-	public String getMarca() {
-		return marca;
-	}
+public Integer getContadorParcial() {
+	return contadorParcial;
+}
 
+public void setContadorParcial(Integer contadorParcial) {
+	this.contadorParcial = contadorParcial;
+}
 
-	public void setMarca(String marca) {
-		this.marca = marca;
-	}
+public Lampara getLampara() {
+	return lampara;
+}
 
+public void setLampara(Lampara lampara) {
+	this.lampara = lampara;
+}
 
-	public String getModelo() {
-		return modelo;
-	}
+public static long getSerialversionuid() {
+	return serialVersionUID;
+}
 
-
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
-	}
-
-
-	public Integer getContadorTotal() {
-		return contadorTotal;
-	}
-
-
-	public void setContadorTotal(Integer contadorTotal) {
-		this.contadorTotal = contadorTotal;
-	}
-
-
-	public Integer getContadorParcial() {
-		return contadorParcial;
-	}
-
-
-	public void setContadorParcial(Integer contadorParcial) {
-		this.contadorParcial = contadorParcial;
-	}
-
-
-	public Lampara getLampara() {
-		return lampara;
-	}
-
-
-	public void setLampara(Lampara lampara) {
-		this.lampara = lampara;
-	}
-
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+@Override
+public String toString() {
+	return "Maquina [id=" + id + ", identificador=" + identificador + ", nombre=" + nombre + ", marca=" + marca
+			+ ", modelo=" + modelo + ", contadorTotal=" + contadorTotal + ", contadorParcial=" + contadorParcial
+			+ ", lampara=" + lampara + "]";
+}
 
 
 
-	@Override
-	public String toString() {
-		return "Maquina [id=" + id + ", identificador=" + identificador + ", nombre=" + nombre + ", marca=" + marca
-				+ ", modelo=" + modelo + ", contadorTotal=" + contadorTotal + ", contadorParcial=" + contadorParcial
-				+ ", lampara=" + lampara + "]";
-	}
-	
-	
-	
-	
 }

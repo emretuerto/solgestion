@@ -20,7 +20,7 @@
 						<div class="form-group col-sm-3 row">
 							<label for="codigo">Código</label> <input type="text"
 								autocomplete="nope" th:field="*{identificador}"
-								id="identificador" class="form-control">
+								id="identificador" class="form-control" readonly>
 						</div>
 						<small th:if="${#fields.hasErrors('identificador')}"
 							th:errors="*{identificador}" class="alert alert-danger col-sm-6"></small>
@@ -31,7 +31,7 @@
 					<div class="form-group col-sm-2 row">
 						<label for="codigo">Nombre</label> <input type="text"
 							autocomplete="nope" th:field="*{nombre}" id="nombre"
-							class="form-control">
+							class="form-control" readonly>
 					</div>
 					<small th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"
 						class="alert alert-danger col-sm-6"></small>
@@ -39,7 +39,7 @@
 					<div class="form-group col-sm-3 row">
 						<label for="codigo">Marca</label> <input type="text"
 							autocomplete="nope" th:field="*{marca}" id="marca"
-							class="form-control">
+							class="form-control" readonly>
 					</div>
 					<small th:if="${#fields.hasErrors('marca')}" th:errors="*{marca}"
 						class="alert alert-danger col-sm-6"></small>
@@ -47,7 +47,7 @@
 					<div class="form-group col-sm-3 row">
 						<label for="codigo">Modelo</label> <input type="text"
 							autocomplete="nope" th:field="*{modelo}" id="modelo"
-							class="form-control">
+							class="form-control" readonly>
 					</div>
 					<small th:if="${#fields.hasErrors('modelo')}" th:errors="*{modelo}"
 						class="alert alert-danger col-sm-6"></small>
@@ -55,7 +55,7 @@
 					<div class="form-group col-sm-2 row">
 						<label for="codigo">Contador Total</label> <input type="number"
 							autocomplete="nope" th:field="*{contadorTotal}"
-							id="contadorTotal" class="form-control">
+							id="contadorTotal" class="form-control" readonly>
 					</div>
 					<small th:if="${#fields.hasErrors('contadorTotal')}"
 						th:errors="*{contadorTotal}" class="alert alert-danger col-sm-6"></small>
@@ -63,13 +63,14 @@
 					<div class="form-group col-sm-2 row">
 						<label for="codigo">Contador Parcial</label> <input type="number"
 							autocomplete="nope" th:field="*{contadorParcial}"
-							id="contadorParcial" class="form-control">
+							id="contadorParcial" class="form-control" readonly>
 					</div>
 					<small th:if="${#fields.hasErrors('contadorParcial')}"
 						th:errors="*{contadorParcial}" class="alert alert-danger col-sm-6"></small>
 
 					<div>
 						<input type="hidden" th:field="*{id}" id="id">
+						<input type="hidden" th:field="*{lampara}" id="lampara">
 					</div>
 				</div>
 			</div>

@@ -11,7 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +23,9 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import es.emretuerto.solgestion.auxiliares.AuxiliarDatos2;
 import es.emretuerto.solgestion.auxiliares.PageRender;
-import es.emretuerto.solgestion.modelo.Lampara;
 import es.emretuerto.solgestion.modelo.Maquina;
 import es.emretuerto.solgestion.servicios.MaquinaServicioInterface;
+import es.emretuerto.solgestion.validaciones.AuxiliarDatos2Validator;
 
 @Controller
 @SessionAttributes({ "maquina", "datos" })
@@ -35,6 +37,20 @@ public class MaquinaController {
 	
 	@Autowired
 	MaquinaServicioInterface maquinaServicio;
+	
+	
+	@Autowired
+	private AuxiliarDatos2Validator validador;
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+
+		if (binder.getObjectName().equals("auxiliarDatos2")) {
+			binder.addValidators(validador);
+		}
+	}
+	
+	
 	
 
 	@GetMapping("/alta")
@@ -100,15 +116,15 @@ public class MaquinaController {
 		LOG.info("Busqueda de maquina por el id");
 		Maquina maquina = maquinaServicio.findById(id);
 		LOG.info(maquina.toString());
-		AuxiliarDatos2 datos = new AuxiliarDatos2();
+		AuxiliarDatos2 auxiliarDatos2 = new AuxiliarDatos2();
 		model.addAttribute("maquina", maquina);
-		model.addAttribute("datos", datos);
+		model.addAttribute("auxiliarDatos2", auxiliarDatos2);
 		LOG.info("LOS DATOS QUE SALEN DE INSTALAR/ID SON: " + model.toString());
 		return "maquina/instalar";
 	}
 	
 	@PostMapping("/instalar")
-	public String instalarLampara(@Valid AuxiliarDatos2 datos, BindingResult result, Model model,
+	public String instalarLampara(@Valid AuxiliarDatos2 auxiliarDatos2, BindingResult result, Model model,
 			SessionStatus status) {
 
 		LOG.info("LOS DATOS QUE LLEGAN DE INSTALAR/ID SON: " + model.toString());

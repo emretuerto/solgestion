@@ -8,9 +8,11 @@ package es.emretuerto.solgestion.modelo;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
@@ -51,6 +53,11 @@ public class Lampara implements Serializable {
     @Column(name = "DURACION", nullable = false)
     private Integer duracion;
 
+    
+    @OneToOne(mappedBy = "lampara", fetch = FetchType.LAZY)
+    private Maquina maquina;
+    
+    
     /*
     @Column(name = "PRECIO")
     private Double precio;
@@ -65,55 +72,92 @@ public class Lampara implements Serializable {
     public Lampara() {
     }
 
-    public Lampara(String codigo, String marca, String modelo, Integer duracion) {
-        this.codigo = codigo;
-        this.marca = marca;
-        this.modelo = modelo;
-        this.duracion = duracion;
-       
-    }
 
-    
+	public Lampara(Integer id,
+			@NotBlank @Pattern(regexp = "[0-9]{4}", message = "Introduzca un código de 4 dígitos numericos") String codigo,
+			String marca, String modelo,
+			@NotNull @Min(value = 0, message = "Introduzca un dato válido") @Digits(fraction = 0, integer = 10, message = "Introduzca un dato válido") Integer duracion,
+			Maquina maquina) {
+		this.id = id;
+		this.codigo = codigo;
+		this.marca = marca;
+		this.modelo = modelo;
+		this.duracion = duracion;
+		this.maquina = maquina;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	
+	public Lampara(String codigo,String marca, String modelo,Integer duracion) {
+		this.codigo = codigo;
+		this.marca = marca;
+		this.modelo = modelo;
+		this.duracion = duracion;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public String getCodigo() {
-        return codigo;
-    }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public String getMarca() {
-        return marca;
-    }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
+	public String getCodigo() {
+		return codigo;
+	}
 
-    public String getModelo() {
-        return modelo;
-    }
 
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
 
-    public Integer getDuracion() {
-        return duracion;
-    }
 
-    public void setDuracion(Integer duracion) {
-        this.duracion = duracion;
-    }
+	public String getMarca() {
+		return marca;
+	}
+
+
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+
+
+	public String getModelo() {
+		return modelo;
+	}
+
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+
+
+	public Integer getDuracion() {
+		return duracion;
+	}
+
+
+	public void setDuracion(Integer duracion) {
+		this.duracion = duracion;
+	}
+
+	
+	public Maquina getMaquina() {
+		return maquina;
+	}
+
+
+	public void setMaquina(Maquina maquina) {
+		this.maquina = maquina;
+	}
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 
 	@Override
 	public String toString() {
@@ -121,6 +165,5 @@ public class Lampara implements Serializable {
 				+ duracion + "]";
 	}
 
-
-
+   
 }

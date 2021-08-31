@@ -18,5 +18,11 @@ public interface LamparaRepository extends JpaRepository<Lampara, Integer>{
 	
 	
 	public Page<Lampara> findAllByOrderByMarca(Pageable pageable);
+	
+	public boolean existsByCodigo(String codigo);
+	
+	public Lampara findByCodigo(String codigo);
+	
+	
       
 }
