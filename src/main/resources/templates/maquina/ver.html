@@ -71,6 +71,7 @@
 					<div>
 						<input type="hidden" th:field="*{id}" id="id">
 						<input type="hidden" th:field="*{lampara}" id="lampara">
+						<input type="hidden" th:field="*{duracionSesion}" id="duracionSesion">
 					</div>
 				</div>
 			</div>
@@ -93,7 +94,7 @@
 					<tr>
 
 						<td class="col-1 align-middle" th:text="${maquina.lampara.codigo}"></td>
-						<td class="col-4 align-middle" th:text="${maquina.lampara.marca"></td>
+						<td class="col-4 align-middle" th:text="${maquina.lampara.marca}"></td>
 						<td class="col-2 align-middle" th:text="${maquina.lampara.modelo}"></td>
 						<td class="col-1 align-middle" th:text="${maquina.lampara.duracion}"></td>
 			</table>

@@ -32,4 +32,9 @@ public interface MaquinaServicioInterface {
     
     public Maquina findById(Integer id);
     
+    public void instalarLampara(Maquina maquina, String codigoLampara);
+    
+    public void incrementarContadores (Maquina maquina, Integer duracionSesion);
+    
+    
 }

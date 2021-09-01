@@ -8,11 +8,11 @@
 
 </head>
 <body>
-<nav th:replace="/plantillas/menucabecera :: menu"></nav>
+	<nav th:replace="/plantillas/menucabecera :: menu"></nav>
 	<div class="container">
 		<h1 th:text="'Alta clientes'"
 			class="text-dark border border-success border-top-0 border-left-0 border-right-0"></h1>
-			</div>
+	</div>
 	<form role="form" th:action="@{/cliente/altainicial}"
 		th:object="${cliente}" method="post">
 		<div class="container">
@@ -127,7 +127,7 @@
 				<option selected>Seleccione el tipo de cliente</option>
 				<option th:each="tipocliente: ${listadoTipoClientes}"
 					th:value="${tipocliente.id}" th:text="${tipocliente.descripcion}"></option>
-			</select > <select class="custom-select my-1 mr-sm-1" name="idfototipo">
+			</select> <select class="custom-select my-1 mr-sm-1" name="idfototipo">
 				<option selected>Fototipo</option>
 				<option th:each="fototipo: ${listadoFototipos}"
 					th:value="${fototipo.id}" th:text="${fototipo.fototipo}"></option>
@@ -144,8 +144,9 @@
 
 
 		<div>
-			<input type="hidden" th:field="*{id}" id="id">
-			<input type="hidden" th:field="*{lampara}" id="lampara">
+			<input type="hidden" th:field="*{id}" id="id"> <input
+				type="hidden" th:field="*{lampara}" id="lampara"> <input
+				type="hidden" th:field="*{duracionSesion}" id="duracionSesion">
 		</div>
 	</form>
 </body>

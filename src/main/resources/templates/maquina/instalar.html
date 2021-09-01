@@ -71,6 +71,7 @@
 					<div>
 						<input type="hidden" th:field="*{id}" id="id">
 						<input type="hidden" th:field="*{lampara}" id="lampara">
+						<input type="hidden" th:field="*{duracionSesion}" id="duracionSesion">
 					</div>
 				</div>
 			</div>
@@ -80,7 +81,7 @@
 			<div class="container">
 				<div>
 					<div class="row align-items-end">
-						<div class="form-group col-sm-1 row">
+						<div class="form-group col-sm-2 row">
 							<label for="codigo">Código</label> <input type="text" placeholder="----"
 								autocomplete="nope" th:field="*{dato2}"  
 								id="dato2" class="form-control">
@@ -91,8 +92,8 @@
 				</div>
 				<div class="row align-items-end"></div>
 				<div class="col-sm-2">
-					<label> </label> <input type="submit" value="Buscar"
-						class="btn btn-primary form-control">
+					<label> </label> <input type="submit" value="Instalar"
+						class="btn btn-primary form-control" onclick="return confirm('Estás seguro que quieres instalar esta lámpara?');">
 				</div>
 			</div>
 		</form>

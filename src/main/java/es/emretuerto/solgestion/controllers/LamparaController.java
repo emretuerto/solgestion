@@ -59,7 +59,7 @@ public class LamparaController {
 	}
 	
 	@GetMapping("/listado")
-	public String listarLamparas(@RequestParam(name="page", defaultValue = "0") int page,Model model) {
+	public String listarLamparas(@RequestParam(name="page", defaultValue = "0") int page,Model model, SessionStatus status) {
 
 
 		
@@ -80,6 +80,7 @@ public class LamparaController {
 		LOG.info(lamparas.toString());
 		LOG.info(pageRender.toString());
 		
+		status.setComplete();
 		return "/lampara/listado";
 
 	}

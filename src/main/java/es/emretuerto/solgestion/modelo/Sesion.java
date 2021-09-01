@@ -1,7 +1,7 @@
 package es.emretuerto.solgestion.modelo;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -31,35 +29,37 @@ public class Sesion implements Serializable {
     @Column(name = "ID")
     private Long id;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false, nullable = false, name = "FECHA")
-    private Date fecha;
+    private LocalDate fecha;
 
     @ManyToOne
-    @Cascade(CascadeType.ALL)
+    @Cascade(CascadeType.MERGE)
     @JoinColumn(name = "CLIENTE_ID", nullable = false)
     private Cliente cliente;
     
     @ManyToOne
-    @Cascade(CascadeType.ALL)
+    @Cascade(CascadeType.MERGE)
     @JoinColumn(name = "MAQUINA_ID", nullable = false)
     private Maquina maquina;
 
+    /*
     @Column(name = "SESIONES_CONSUMIDAS_BONO", nullable = true)
     private Double sesionesConsumidasBono;
+    */
+    
     
     @Column(name = "DURACION", nullable = false)
     private Integer duracion;
 
     public Sesion(Cliente cliente, Maquina maquina, Double sesionesConsumidasBono, Integer duracion) {
-        this.fecha = new Date();
+        this.fecha = LocalDate.now();
         this.cliente = cliente;
         this.maquina = maquina;
-        this.sesionesConsumidasBono = sesionesConsumidasBono;
         this.duracion = duracion;
     }
 
     public Sesion() {
+    	this.fecha = LocalDate.now();
     }
 
     public Long getId() {
@@ -70,11 +70,11 @@ public class Sesion implements Serializable {
         this.id = id;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -102,19 +102,21 @@ public class Sesion implements Serializable {
         this.maquina = solarium;
     }
 
+	@Override
+	public String toString() {
+		return "Sesion [fecha=" + fecha + ", duracion=" + duracion + "]";
+	}
+
+    /*
     public Double getSesionesConsumidasBono() {
         return sesionesConsumidasBono;
     }
 
     public void setSesionesConsumidasBono(Double sesionesConsumidasBono) {
         this.sesionesConsumidasBono = sesionesConsumidasBono;
-    }
+    }*/
 
-    @Override
-    public String toString() {
-        return "Sesion{" + "fecha=" + fecha + ", cliente=" + cliente.getCodigoBarras() + ", maquina=" + maquina.getNombre() + ", sesionesConsumidasBono=" + sesionesConsumidasBono + ", duracion=" + duracion + '}';
-    }
-    
+
 
 
 }

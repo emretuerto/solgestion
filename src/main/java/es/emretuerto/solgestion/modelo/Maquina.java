@@ -60,120 +60,152 @@ public class Maquina implements Serializable {
 	@Column(name = "CONTADOR_PARCIAL", nullable = true)
 	private Integer contadorParcial;
 
-/*	@OneToMany(mappedBy = "maquina", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@Column(name = "SESION_ID")
-	private List<Sesion> sesiones = new ArrayList<Sesion>();
+	@Column(name = "DURACION_SESION", nullable = true)
+	private Integer duracionSesion;
 
-	@OneToMany(mappedBy = "maquina", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@Column(name = "LAMPARAINSTALADA_ID")
-	private List<LamparaInstalada> lamparasInstaladas = new ArrayList<LamparaInstalada>();
-
-*/  
+	/*
+	 * @OneToMany(mappedBy = "maquina", cascade = CascadeType.ALL, fetch =
+	 * FetchType.LAZY)
+	 * 
+	 * @Column(name = "SESION_ID") private List<Sesion> sesiones = new
+	 * ArrayList<Sesion>();
+	 * 
+	 * @OneToMany(mappedBy = "maquina", cascade = CascadeType.ALL, fetch =
+	 * FetchType.LAZY)
+	 * 
+	 * @Column(name = "LAMPARAINSTALADA_ID") private List<LamparaInstalada>
+	 * lamparasInstaladas = new ArrayList<LamparaInstalada>();
+	 * 
+	 */
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ID_LAMPARA", updatable = false)
+	@JoinColumn(name = "ID_LAMPARA")
 	private Lampara lampara;
 
-public Maquina(Integer id,
-		@NotBlank @Pattern(regexp = "[0-9]{4}", message = "Introduzca un código de 4 dígitos numericos") String identificador,
-		@NotBlank String nombre, String marca, String modelo, @NotNull Integer contadorTotal, Integer contadorParcial,
-		Lampara lampara) {
-	this.id = id;
-	this.identificador = identificador;
-	this.nombre = nombre;
-	this.marca = marca;
-	this.modelo = modelo;
-	this.contadorTotal = contadorTotal;
-	this.contadorParcial = contadorParcial;
-	this.lampara = lampara;
-}
-public Maquina(String identificador, String nombre, String marca, String modelo,Integer contadorTotal, Integer contadorParcial) {
-	this.identificador = identificador;
-	this.nombre = nombre;
-	this.marca = marca;
-	this.modelo = modelo;
-	this.contadorTotal = contadorTotal;
-	this.contadorParcial = contadorParcial;
-}
+	public Maquina(Integer id,
+			@NotBlank @Pattern(regexp = "[0-9]{4}", message = "Introduzca un código de 4 dígitos numericos") String identificador,
+			@NotBlank String nombre, String marca, String modelo, @NotNull Integer contadorTotal,
+			Integer contadorParcial, Lampara lampara) {
+		this.id = id;
+		this.identificador = identificador;
+		this.nombre = nombre;
+		this.marca = marca;
+		this.modelo = modelo;
+		this.contadorTotal = contadorTotal;
+		this.contadorParcial = contadorParcial;
+		this.lampara = lampara;
+	}
 
-public Maquina() {
+	public Maquina(String identificador, String nombre, String marca, String modelo, Integer contadorTotal,
+			Integer contadorParcial) {
+		this.identificador = identificador;
+		this.nombre = nombre;
+		this.marca = marca;
+		this.modelo = modelo;
+		this.contadorTotal = contadorTotal;
+		this.contadorParcial = contadorParcial;
+	}
 
-}
+	public Maquina(Integer id,
+			@NotBlank @Pattern(regexp = "[0-9]{4}", message = "Introduzca un código de 4 dígitos numericos") String identificador,
+			@NotBlank String nombre, String marca, String modelo, @NotNull Integer contadorTotal,
+			Integer contadorParcial, Integer duracionSesion, Lampara lampara) {
+		this.id = id;
+		this.identificador = identificador;
+		this.nombre = nombre;
+		this.marca = marca;
+		this.modelo = modelo;
+		this.contadorTotal = contadorTotal;
+		this.contadorParcial = contadorParcial;
+		this.duracionSesion = duracionSesion;
+		this.lampara = lampara;
+	}
 
-public Integer getId() {
-	return id;
-}
+	public Maquina() {
 
-public void setId(Integer id) {
-	this.id = id;
-}
+	}
 
-public String getIdentificador() {
-	return identificador;
-}
+	public Integer getId() {
+		return id;
+	}
 
-public void setIdentificador(String identificador) {
-	this.identificador = identificador;
-}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-public String getNombre() {
-	return nombre;
-}
+	public String getIdentificador() {
+		return identificador;
+	}
 
-public void setNombre(String nombre) {
-	this.nombre = nombre;
-}
+	public void setIdentificador(String identificador) {
+		this.identificador = identificador;
+	}
 
-public String getMarca() {
-	return marca;
-}
+	public String getNombre() {
+		return nombre;
+	}
 
-public void setMarca(String marca) {
-	this.marca = marca;
-}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-public String getModelo() {
-	return modelo;
-}
+	public String getMarca() {
+		return marca;
+	}
 
-public void setModelo(String modelo) {
-	this.modelo = modelo;
-}
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
 
-public Integer getContadorTotal() {
-	return contadorTotal;
-}
+	public String getModelo() {
+		return modelo;
+	}
 
-public void setContadorTotal(Integer contadorTotal) {
-	this.contadorTotal = contadorTotal;
-}
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
 
-public Integer getContadorParcial() {
-	return contadorParcial;
-}
+	public Integer getContadorTotal() {
+		return contadorTotal;
+	}
 
-public void setContadorParcial(Integer contadorParcial) {
-	this.contadorParcial = contadorParcial;
-}
+	public void setContadorTotal(Integer contadorTotal) {
+		this.contadorTotal = contadorTotal;
+	}
 
-public Lampara getLampara() {
-	return lampara;
-}
+	public Integer getContadorParcial() {
+		return contadorParcial;
+	}
 
-public void setLampara(Lampara lampara) {
-	this.lampara = lampara;
-}
+	public void setContadorParcial(Integer contadorParcial) {
+		this.contadorParcial = contadorParcial;
+	}
 
-public static long getSerialversionuid() {
-	return serialVersionUID;
-}
+	public Lampara getLampara() {
+		return lampara;
+	}
 
-@Override
-public String toString() {
-	return "Maquina [id=" + id + ", identificador=" + identificador + ", nombre=" + nombre + ", marca=" + marca
-			+ ", modelo=" + modelo + ", contadorTotal=" + contadorTotal + ", contadorParcial=" + contadorParcial
-			+ ", lampara=" + lampara + "]";
-}
+	public void setLampara(Lampara lampara) {
+		this.lampara = lampara;
+		lampara.setMaquina(this);
+	}
 
+	public Integer getDuracionSesion() {
+		return duracionSesion;
+	}
 
+	public void setDuracionSesion(Integer duracionSesion) {
+		this.duracionSesion = duracionSesion;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "Maquina [id=" + id + ", identificador=" + identificador + ", nombre=" + nombre + ", marca=" + marca
+				+ ", modelo=" + modelo + ", contadorTotal=" + contadorTotal + ", contadorParcial=" + contadorParcial
+				+ ", lampara=" + lampara + "]";
+	}
 
 }

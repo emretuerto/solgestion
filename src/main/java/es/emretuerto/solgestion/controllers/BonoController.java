@@ -56,7 +56,7 @@ public class BonoController {
 	}
 
 	@GetMapping("/listado")
-	public String listarBonos(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
+	public String listarBonos(@RequestParam(name = "page", defaultValue = "0") int page, Model model, SessionStatus status) {
 
 		Pageable pageRequest = PageRequest.of(page, 9);
 		Page<Bono> bonos = bonoServicio.listado(pageRequest);
@@ -68,6 +68,7 @@ public class BonoController {
 		LOG.info(bonos.toString());
 		LOG.info(pageRender.toString());
 
+		status.setComplete();
 		return "/bono/listado";
 
 	}

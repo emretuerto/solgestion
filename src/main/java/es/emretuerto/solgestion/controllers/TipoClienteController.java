@@ -45,7 +45,7 @@ public class TipoClienteController {
 	TipoClienteValidator tipoClienteValidator;
 
 	@GetMapping("/listado")
-	public String listarTipoClientes(@RequestParam(name="page", defaultValue = "0") int page,Model model) {
+	public String listarTipoClientes(@RequestParam(name="page", defaultValue = "0") int page,Model model, SessionStatus status) {
 
 //List<TipoCliente> listadoTipoClientes = new ArrayList<>();
 //listadoTipoClientes = tipoClienteServicio.listarTiposClienteActivos(true);
@@ -64,7 +64,7 @@ public class TipoClienteController {
 
 		LOG.info(clientes.toString());
 		LOG.info(pageRender.toString());
-		
+		status.setComplete();
 		return "/tipoclientes/listado";
 
 	}

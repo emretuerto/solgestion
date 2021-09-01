@@ -141,7 +141,7 @@ public class ClienteController {
 	}
 
 	@GetMapping("/listado")
-	public String listarClientes(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
+	public String listarClientes(@RequestParam(name = "page", defaultValue = "0") int page, Model model, SessionStatus status) {
 
 		List<Cliente> listadoClientes = new ArrayList<>();
 		listadoClientes = clienteServicio.listadoOrdenadoPorNombre();
@@ -155,6 +155,7 @@ public class ClienteController {
 
 		model.addAttribute("listadoClientes", clientes);
 		model.addAttribute("page", pageRender);
+		status.setComplete();
 		return "/cliente/listado";
 
 	}

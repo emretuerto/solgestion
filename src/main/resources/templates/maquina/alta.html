@@ -24,8 +24,7 @@
 							id="identificador" class="form-control">
 					</div>
 					<small th:if="${#fields.hasErrors('identificador')}"
-						th:errors="*{identificador}"
-						class="alert alert-danger col-sm-6"></small>
+						th:errors="*{identificador}" class="alert alert-danger col-sm-6"></small>
 
 				</div>
 			</div>
@@ -61,16 +60,22 @@
 				</div>
 				<small th:if="${#fields.hasErrors('contadorTotal')}"
 					th:errors="*{contadorTotal}" class="alert alert-danger col-sm-6"></small>
-			
+
 				<div class="form-group col-sm-2 row">
 					<label for="codigo">Contador Parcial</label> <input type="number"
-						autocomplete="nope" th:field="*{contadorParcial}" id="contadorParcial"
-						class="form-control">
+						autocomplete="nope" th:field="*{contadorParcial}"
+						id="contadorParcial" class="form-control">
 				</div>
 				<small th:if="${#fields.hasErrors('contadorParcial')}"
 					th:errors="*{contadorParcial}" class="alert alert-danger col-sm-6"></small>
 
-
+				<div class="form-group col-sm-2 row">
+					<label for="codigo">Duracion Sesión</label> <input type="number"
+						autocomplete="nope" th:field="*{duracionSesion}"
+						id="duracionSesion" class="form-control">
+				</div>
+				<small th:if="${#fields.hasErrors('duracionSesion')}"
+					th:errors="*{duracionSesion}" class="alert alert-danger col-sm-6"></small>
 
 
 			</div>
@@ -84,9 +89,8 @@
 
 			<div>
 				<input type="hidden" th:field="*{id}" id="id">
-				<input type="hidden" th:field="*{lampara}" id="lampara">
 			</div>
-			</div>
+		</div>
 	</form>
 </body>
 </html>

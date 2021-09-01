@@ -92,6 +92,7 @@ public class Cliente implements Serializable {
     private Fototipo fototipo;
 */
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+    @Cascade(CascadeType.MERGE)
     @Column(name = "SESIONES_CLIENTES")
     private List<Sesion> sesionesCliente = new ArrayList<Sesion>();
 

@@ -28,6 +28,20 @@
 								class="dropdown-item" th:href=@{/cliente/listado}>Listado</a> <a
 								class="dropdown-item" href="#">Buscar</a>
 
+
+
+						</div></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" th:href=@{/tipoclientes/listado}
+						id="navbarDropdownMenuLink" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">Tipo Clientes </a>
+						<div class="dropdown-menu"
+							aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" th:href=@{/tipoclientes/alta}>Alta</a> <a
+								class="dropdown-item" th:href=@{/tipoclientes/listado}>Listado</a>
+
+
+
 						</div></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" th:href=@{/maquina/listado}
@@ -46,12 +60,11 @@
 						<div class="dropdown-menu"
 							aria-labelledby="navbarDropdownMenuLink">
 							<a class="dropdown-item" href="/bono/alta">Alta</a> <a
-								class="dropdown-item" th:href=@{/bono/listado}>Listado</a> 
-								<a
+								class="dropdown-item" th:href=@{/bono/listado}>Listado</a> <a
 								class="dropdown-item" th:href=@{/bono/recarga}>Recarga Bono</a><a
 								class="dropdown-item" th:href=@{/bono/asocia}>Asociar bono</a>
 						</div></li>
-						<li class="nav-item dropdown"><a
+					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" th:href=@{/lampara/listado}
 						id="navbarDropdownMenuLink" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false"> Lámparas </a>
@@ -62,16 +75,16 @@
 								class="dropdown-item" href="#"></a>
 						</div></li>
 					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="#"
+						class="nav-link dropdown-toggle" th:href=@{/sesion/listado}
 						id="navbarDropdownMenuLink" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false"> Sesiones </a>
 						<div class="dropdown-menu"
 							aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="/bono/alta">Alta</a> <a
-								class="dropdown-item" th:href=@{/bono/listado}>Listado</a> <a
+							<a class="dropdown-item" href="/sesion/alta">Alta</a> <a
+								class="dropdown-item" th:href=@{/sesion/listado}>Listado</a> <a
 								class="dropdown-item" href="#"></a>
 						</div></li>
-						<li class="nav-item dropdown"><a
+					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#"
 						id="navbarDropdownMenuLink" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false"> Exportar </a>

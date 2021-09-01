@@ -24,6 +24,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import es.emretuerto.solgestion.auxiliares.AuxiliarDatos2;
 import es.emretuerto.solgestion.auxiliares.PageRender;
 import es.emretuerto.solgestion.modelo.Maquina;
+import es.emretuerto.solgestion.servicios.LamparaServicioInterface;
 import es.emretuerto.solgestion.servicios.MaquinaServicioInterface;
 import es.emretuerto.solgestion.validaciones.AuxiliarDatos2Validator;
 
@@ -31,14 +32,15 @@ import es.emretuerto.solgestion.validaciones.AuxiliarDatos2Validator;
 @SessionAttributes({ "maquina", "datos" })
 @RequestMapping("/maquina")
 public class MaquinaController {
-	
+
 	final Logger LOG = Logger.getLogger("MaquinaController.class");
-	
-	
+
 	@Autowired
 	MaquinaServicioInterface maquinaServicio;
-	
-	
+
+	@Autowired
+	LamparaServicioInterface lamparaServicio;
+
 	@Autowired
 	private AuxiliarDatos2Validator validador;
 
@@ -49,9 +51,6 @@ public class MaquinaController {
 			binder.addValidators(validador);
 		}
 	}
-	
-	
-	
 
 	@GetMapping("/alta")
 	public String altaMaquina(Model model) {
@@ -65,25 +64,22 @@ public class MaquinaController {
 	}
 
 	@PostMapping("/alta")
-	public String altaInicialEnvio(@Valid Maquina maquina, BindingResult result, Model model,
-			SessionStatus status) {
-
-
+	public String altaInicialEnvio(@Valid Maquina maquina, BindingResult result, Model model, SessionStatus status) {
 
 		if (result.hasErrors()) {
 
 			LOG.info(result.toString());
 			return "maquina/alta";
 		}
-		
-		
+
 		maquinaServicio.insertar(maquina);
 		status.setComplete();
 		return "redirect:/maquina/listado";
 	}
-	
+
 	@GetMapping("/listado")
-	public String listarMaquinas(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
+	public String listarMaquinas(@RequestParam(name = "page", defaultValue = "0") int page, Model model,
+			SessionStatus status) {
 
 		Pageable pageRequest = PageRequest.of(page, 9);
 		Page<Maquina> maquinas = maquinaServicio.listado(pageRequest);
@@ -94,18 +90,18 @@ public class MaquinaController {
 
 		LOG.info("DATOS DEL LIST DE MAQUINAS" + maquinas.toString());
 		LOG.info("DATOS DEL LIST DE MAQUINAS" + pageRequest.toString());
-
-
+		status.setComplete();
 		return "/maquina/listado";
 
 	}
-	
+
 	@GetMapping("ver/{id}")
 	public String editarMaquina(@PathVariable int id, Model model) {
 
 		LOG.info("Busqueda de maquina por el id");
 		Maquina maquina = maquinaServicio.findById(id);
-		LOG.info(maquina.toString());
+		LOG.info("LA MAQUINA A VISUALIZAR ES: " + maquina.toString());
+		LOG.info("LA LAMPARA INSTALADA ES: " + maquina.getLampara());
 		model.addAttribute("maquina", maquina);
 		return "maquina/ver";
 	}
@@ -122,7 +118,7 @@ public class MaquinaController {
 		LOG.info("LOS DATOS QUE SALEN DE INSTALAR/ID SON: " + model.toString());
 		return "maquina/instalar";
 	}
-	
+
 	@PostMapping("/instalar")
 	public String instalarLampara(@Valid AuxiliarDatos2 auxiliarDatos2, BindingResult result, Model model,
 			SessionStatus status) {
@@ -135,11 +131,12 @@ public class MaquinaController {
 			LOG.info("LOS DATOS QUE VAN A REENVIARSE INSTALAR/ID SON: " + model.toString());
 			return "maquina/instalar";
 		}
-		
-		
-	//	maquinaServicio.insertar(maquina);
+
+		Maquina maquina = (Maquina) model.getAttribute("maquina");
+		maquinaServicio.instalarLampara(maquina, auxiliarDatos2.getDato2());
+		// lamparaServicio.instalarLampara(maquina, auxiliarDatos2.getDato2());
 		status.setComplete();
 		return "redirect:/maquina/listado";
 	}
-	
+
 }
