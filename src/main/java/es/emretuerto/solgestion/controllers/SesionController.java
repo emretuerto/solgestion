@@ -2,6 +2,7 @@ package es.emretuerto.solgestion.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import javax.validation.Valid;
@@ -52,7 +53,7 @@ public class SesionController {
 
 	@Autowired
 	private MaquinaServicioInterface maquinaServicio;
-	
+
 	@Autowired
 	SesionRepository sesionDAO;
 
@@ -90,7 +91,10 @@ public class SesionController {
 		try {
 
 			LOG.info("Entra a buscar el cliente por código de barras");
-			cliente = clienteServicio.buscarPorCodigoBarras(auxiliarDatos.getDato1());
+
+			Optional<Cliente> clienteOptional = clienteServicio.buscarPorCodigoBarras(auxiliarDatos.getDato1());
+			cliente = clienteOptional.get();
+
 			model.addAttribute("cliente", cliente);
 
 			LOG.info(cliente.toString());
@@ -129,7 +133,7 @@ public class SesionController {
 	}
 
 	@PostMapping("registrarsesion")
-	public String registroFinalSesion(Model model, SessionStatus status) {
+	public String registroFinalSesion(Sesion sesion, Model model, SessionStatus status) {
 
 		LOG.info("ULTIMA FASE DEL REGISTRO Y DEFINITIVA DE LA SESION Y EL MODEL ES" + model.toString());
 		LOG.info("LA MAQUINA DE LA SESION ES " + ((Maquina) model.getAttribute("maquina")).toString());
@@ -138,7 +142,7 @@ public class SesionController {
 
 		Cliente cliente = (Cliente) model.getAttribute("cliente");
 		Maquina maquina = (Maquina) model.getAttribute("maquina");
-		Sesion sesion = (Sesion) model.getAttribute("sesion");
+
 		sesionServicio.registraSesion(cliente, maquina, sesion);
 		LOG.info("SE SUPONE QUE YA DEBERIA ESTAR TODO HECHO" + sesion.toString());
 		LOG.info("SE SUPONE QUE YA DEBERIA ESTAR TODO HECHO" + sesion.getMaquina().toString());

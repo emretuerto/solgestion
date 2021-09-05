@@ -118,9 +118,8 @@
 		<div class="container">
 			<div class="row align-items-end">
 				<div class="form-group col-sm-2 row">
-					<label for="codigo">Duración Sesión</label> <input type="text"
-						autocomplete="nope" th:field="*{duracion}"
-						value="${maquina.duracionSesion}" id="duracion"
+					<label for="codigo">Duración Sesión</label> <input type="number"
+						autocomplete="nope" th:field="*{duracion}" id="duracion"
 						class="form-control">
 				</div>
 			</div>
@@ -135,8 +134,8 @@
 
 		<div class="container">
 			<div>
-				<input type="hidden" th:field="*{id}" id="id"> <input
-					type="hidden" th:field="*{fecha}" id="fecha">
+				<input type="hidden" th:field="*{id}" id="id"> 
+		 		<input	type="hidden" th:field="*{fecha}" id="fecha">
 			</div>
 		</div>
 	</form>

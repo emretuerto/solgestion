@@ -6,6 +6,8 @@ import es.emretuerto.solgestion.modelo.Cliente;
 import es.emretuerto.solgestion.servicios.ClienteServicioInterface;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,10 +34,9 @@ public class ClienteServicioImpl implements ClienteServicioInterface {
 	}
 
 	@Override
-	public Cliente buscarPorCodigoBarras(String codigo) {
+	public Optional<Cliente> buscarPorCodigoBarras(String codigo) {
 
-		Cliente cliente = clienteDao.findClienteByCodigoBarras(codigo);
-		return cliente;
+		return clienteDao.findClienteByCodigoBarras(codigo);
 
 	}
 
@@ -79,9 +80,16 @@ public class ClienteServicioImpl implements ClienteServicioInterface {
 	@Override
 	public boolean existeCliente(String nif) {
 
-		return (clienteDao.findByNif(nif)!=null);
+		Optional<Cliente> cliente = clienteDao.findByNif(nif);
+		return cliente.isPresent();
 	}
 
+	public Optional<Cliente> buscaClienteNif(String nif){
+		
+		return clienteDao.findByNif(nif);
+	}
+	
+	
 	@Override
 	public List<Cliente> listadoClientesBono(Bono bono) {
 	return clienteDao.findByBono(bono);

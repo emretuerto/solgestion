@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>SOLGESTION</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+
+</head>
+<body>
+	<nav th:replace="/plantillas/menucabecera :: menu"></nav>
+	<div class="container">
+		<h1 th:text="'Alta sesión'"
+			class="text-dark border border-success border-top-0 border-left-0 border-right-0"></h1>
+	</div>
+	<div class="container">
+		<form role="form" th:action="@{/sesion/registrarsesion}"
+			th:object="${sesion}" method="post">
+			<div>
+				<div class="row align-items-end">
+					<div class="form-group col-sm-3 row">
+						<label for="codigo">Código Barras</label> <input type="text"
+							autocomplete="nope" th:field="*{cliente.codigoBarras}"
+							id="cliente.codigoBarras" class="form-control" readonly>
+					</div>
+
+				</div>
+			</div>
+			<div class="row align-items-end">
+				<div class="form-group col-sm-2 row">
+					<label for="codigo">Nombre</label> <input type="text"
+						autocomplete="nope" th:field="*{cliente.nombre}"
+						id="cliente.nombre" class="form-control" readonly>
+				</div>
+
+
+				<div class="form-group col-sm-6 row">
+					<label for="codigo">Apellidos</label> <input type="text"
+						autocomplete="nope" th:field="*{cliente.apellidos}"
+						id="cliente.apellidos" class="form-control" readonly>
+				</div>
+
+				<div class="form-group col-sm-2 row">
+					<label for="codigo">NIF</label> <input type="text"
+						autocomplete="nope" th:field="*{cliente.nif}" id="cliente.nif"
+						class="form-control" readonly>
+				</div>
+
+			</div>
+
+			<div class="row align-items-end"></div>
+
+
+
+			<div class="container"></div>
+
+
+			<div class="container">
+				<div>
+					<div class="row align-items-end">
+						<div class="form-group col-sm-3 row">
+							<label for="codigo">nombre</label> <input type="text"
+								autocomplete="nope" th:field="*{maquina.nombre}"
+								id="maquina.nombre" class="form-control" readonly>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row align-items-end"></div>
+
+
+
+			<div class="container"></div>
+
+			<div class="container">
+				<div class="row align-items-end">
+					<div class="form-group col-sm-2 row">
+						<label for="codigo">Duración Sesión</label> <input type="number"
+							autocomplete="nope" th:field="*{duracion}" id="duracion"
+							class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<label> </label> <input type="submit" value="Registar sesión"
+					class="btn btn-primary form-control">
+			</div>
+			<div class="row align-items-end"></div>
+
+
+
+			<div class="container">
+				<div>
+					<input type="hidden" th:field="*{id}" id="id"> <input
+						type="hidden" th:field="*{fecha}" id="fecha">
+				</div>
+			</div>
+		</form>
+		</div>
+</body>
+</html>

@@ -260,7 +260,9 @@ public class BonoController {
 		try {
 
 			LOG.info("Entra a buscar el cliente por código de barras");
-			cliente = clienteServicio.buscarPorCodigoBarras(auxiliarDatos.getDato1());
+			Optional<Cliente> clienteOptional = clienteServicio.buscarPorCodigoBarras(auxiliarDatos.getDato1());
+			
+			cliente = clienteOptional.get();
 			model.addAttribute("cliente", cliente);
 			LOG.info(cliente.toString());
 			model.addAttribute("cliente", cliente);

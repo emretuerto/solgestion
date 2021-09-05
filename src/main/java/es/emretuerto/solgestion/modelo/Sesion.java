@@ -1,7 +1,8 @@
 package es.emretuerto.solgestion.modelo;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +31,7 @@ public class Sesion implements Serializable {
     private Long id;
 
     @Column(updatable = false, nullable = false, name = "FECHA")
-    private LocalDate fecha;
+    private LocalDateTime fecha;
 
     @ManyToOne
     @Cascade(CascadeType.MERGE)
@@ -51,15 +52,15 @@ public class Sesion implements Serializable {
     @Column(name = "DURACION", nullable = false)
     private Integer duracion;
 
-    public Sesion(Cliente cliente, Maquina maquina, Double sesionesConsumidasBono, Integer duracion) {
-        this.fecha = LocalDate.now();
+    public Sesion(Cliente cliente, Maquina maquina, Integer duracion) {
+        this.fecha = LocalDateTime.now();
         this.cliente = cliente;
         this.maquina = maquina;
         this.duracion = duracion;
     }
 
     public Sesion() {
-    	this.fecha = LocalDate.now();
+    	this.fecha = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -70,11 +71,11 @@ public class Sesion implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 

@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import es.emretuerto.solgestion.auxiliares.RangoFechas;
 import es.emretuerto.solgestion.modelo.Maquina;
 
 /**
@@ -35,6 +36,7 @@ public interface MaquinaServicioInterface {
     public void instalarLampara(Maquina maquina, String codigoLampara);
     
     public void incrementarContadores (Maquina maquina, Integer duracionSesion);
+    
     
     
 }

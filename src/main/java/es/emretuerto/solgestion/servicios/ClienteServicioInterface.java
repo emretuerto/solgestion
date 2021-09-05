@@ -1,6 +1,7 @@
 package es.emretuerto.solgestion.servicios;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +20,7 @@ public interface ClienteServicioInterface {
 
 	public void insertar(Cliente cliente);
 	
-	public Cliente buscarPorCodigoBarras(String codigo);
+	public Optional<Cliente> buscarPorCodigoBarras(String codigo);
 
 	public List<Cliente> listado();
 	
@@ -38,6 +39,8 @@ public interface ClienteServicioInterface {
 	public List<Cliente> listadoClientesBono(Bono bono);
 	
 	public void desasociaBono(Cliente cliente);
+	
+	public Optional<Cliente> buscaClienteNif(String nif);
 	
     
 }

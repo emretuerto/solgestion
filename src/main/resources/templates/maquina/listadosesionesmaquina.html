@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>SOLGESTION</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+
+</head>
+<body>
+	<nav th:replace="/plantillas/menucabecera :: menu"></nav>
+	<div class="container">
+		<h1 th:text="'Sesiones por Máquina'"
+			class="text-dark border border-success border-top-0 border-left-0 border-right-0"></h1>
+	</div>
+
+	<div class="container">
+		<div>
+			<div class="row align-items-end">
+				<div class="form-group col-sm-3 row">
+					<label for="codigo">nombre</label> <input type="text"
+						autocomplete="nope" th:field="*{maquina.nombre}" id="nombre"
+						class="form-control" readonly>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row align-items-end"></div>
+
+	<form role="form" th:action="@{/maquina/listadosesiones}"
+		th:object="${rangoFechas}" method="post">
+		<div class="container">
+			<div class="row align-items-end">
+				<div class="form-group col-sm-2 row">
+					<label for="codigo">Desde</label> <input type="date"
+						autocomplete="nope" th:field="*{inicio}" id="inicio"
+						class="form-control">
+				</div>
+
+			</div>
+			<div class="row align-items-end">
+				<div class="form-group col-sm-2 row">
+					<label for="codigo">Hasta</label> <input type="date"
+						autocomplete="nope" th:field="*{fin}" id="fin"
+						class="form-control">
+				</div>
+			</div>
+		</div>
+		<div class="row align-items-end"></div>
+		<div class="col-sm-2">
+			<label> </label> <input type="submit" value="Listado"
+				class="btn btn-primary form-control">
+		</div>
+	</form>
+</body>
+</html>

@@ -24,6 +24,7 @@
 					<th class="text-secondary col-1">Contador Parcial</th>
 					<th class="col-1"></th>
 					<th class="col-1"></th>
+					<th class="col-1"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -34,10 +35,12 @@
 					<td class="col-4 align-middle" th:text="${maquina.modelo}"></td>
 					<td class="col-1 align-middle" th:text="${maquina.contadorTotal}"></td>
 					<td class="col-1 align-middle" th:text="${maquina.contadorParcial}"></td>
-					<td><a th:href="@{ver/} + ${maquina.id}"
-						th:text="'Ver'" class="btn btn-success btn-xs "></a></td>
+					<td><a th:href="@{ver/} + ${maquina.id}" th:text="'Ver'"
+						class="btn btn-success btn-xs "></a></td>
 					<td><a th:href="@{instalar/} + ${maquina.id}"
 						th:text="'Lámpara'" class="btn btn-primary btn-xs "></a></td>
+					<td><a th:href="@{listado/} + ${maquina.id}"
+						th:text="'Sesiones'" class="btn btn-secondary btn-xs "></a></td>
 			</tbody>
 		</table>
 		<nav th:replace="/maquina/paginator-nav :: paginator"></nav>

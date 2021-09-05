@@ -2,6 +2,7 @@ package es.emretuerto.solgestion.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import javax.validation.Valid;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import es.emretuerto.solgestion.auxiliares.AuxiliarDatos;
@@ -33,6 +35,7 @@ import es.emretuerto.solgestion.servicios.TipoClienteServicioInterface;
 import es.emretuerto.solgestion.validaciones.ClienteValidator;
 
 @Controller
+@SessionAttributes({ "cliente" })
 @RequestMapping("/cliente")
 public class ClienteController {
 
@@ -110,7 +113,7 @@ public class ClienteController {
 	public String altaInicialEnvio(@Valid AuxiliarDatos auxiliarDatos, BindingResult result, Model model,
 			SessionStatus status) {
 
-		Cliente cliente;
+		Optional<Cliente> cliente;
 		LOG.info("hARÁ LO QUE TIENEN QUE HACER???");
 		LOG.info(model.toString());
 
@@ -119,19 +122,19 @@ public class ClienteController {
 			LOG.info(result.toString());
 			return "cliente/alta";
 		}
-		try {
 
-			LOG.info("Entra a buscar el cliente por código de barras");
-			cliente = clienteServicio.buscarPorCodigoBarras(auxiliarDatos.getDato1());
-			model.addAttribute("cliente", cliente);
+		cliente = clienteServicio.buscarPorCodigoBarras(auxiliarDatos.getDato1());
 
-			LOG.info(cliente.toString());
-			model.addAttribute("cliente", cliente);
-		} catch (Exception e) {
+		if (cliente.isPresent()) {
+			Cliente cliente2 = new Cliente();
+			cliente2 = cliente.get();
+			model.addAttribute("cliente", cliente2);
+
+		} else if (cliente.isEmpty()) {
 			LOG.info("No ha encontrado en cliente");
-			cliente = new Cliente();
-			cliente.setCodigoBarras(auxiliarDatos.getDato1());
-			model.addAttribute("cliente", cliente);
+			Cliente cliente2 = new Cliente();
+			cliente2.setCodigoBarras(auxiliarDatos.getDato1());
+			model.addAttribute("cliente", cliente2);
 			return "redirect:/cliente/altainicial/" + auxiliarDatos.getDato1();
 
 		}
@@ -141,7 +144,8 @@ public class ClienteController {
 	}
 
 	@GetMapping("/listado")
-	public String listarClientes(@RequestParam(name = "page", defaultValue = "0") int page, Model model, SessionStatus status) {
+	public String listarClientes(@RequestParam(name = "page", defaultValue = "0") int page, Model model,
+			SessionStatus status) {
 
 		List<Cliente> listadoClientes = new ArrayList<>();
 		listadoClientes = clienteServicio.listadoOrdenadoPorNombre();
@@ -166,6 +170,7 @@ public class ClienteController {
 		LOG.info("Busqueda de cliente por el id");
 		Cliente cliente = clienteServicio.findById(id);
 		LOG.info(cliente.toString());
+		LOG.info("TIENE SESIONES ESTE CLIENTE?" + cliente.getSesionesCliente().toString());
 		model.addAttribute("cliente", cliente);
 		return "cliente/actualizar";
 	}
@@ -194,13 +199,54 @@ public class ClienteController {
 		status.setComplete();
 		return "redirect:/cliente/listado";
 	}
-	
-	
+
 	@GetMapping("ver/recargar/{id}")
 	public String RecargarBonoCliente(@PathVariable int id, Model model) {
 
+		return "forward:/bono/recarga/" + id;
+	}
 
-		return "forward:/bono/recarga/"+id;
+	@GetMapping("/buscar")
+	public String buscarCliente(Model model) {
+
+		Cliente cliente = new Cliente();
+		model.addAttribute("cliente", cliente);
+
+		LOG.info("ANTES DE BUSCAR EL MODEL ES " + model.toString());
+		return "/cliente/buscar";
+	}
+
+	@PostMapping("/buscar")
+	public String buscarClienteBBDD(Cliente cliente, BindingResult result, Model model) {
+
+		LOG.info("EL MODEL ANTES DE LA SEGUNDA PARTE DE LA BUSQUEDA ES" + model.toString());
+		LOG.info("EL MODEL ANTES DE LA SEGUNDA PARTE cliente - " + cliente.toString());
+		LOG.info("LOS ERRORES SON" + result.toString());
+
+		/*
+		 * if (result.hasErrors()) {
+		 * 
+		 * LOG.info(result.toString()); return "cliente/buscar"; }
+		 */
+
+		Optional<Cliente> clienteOptional;
+
+		try {
+
+			clienteOptional = clienteServicio.buscarPorCodigoBarras(cliente.getCodigoBarras());
+			cliente = clienteOptional.get();
+
+		} catch (Exception e) {
+			try {
+
+				clienteOptional = clienteServicio.buscaClienteNif(cliente.getNif());
+				cliente = clienteOptional.get();
+			} catch (Exception ex) {
+				return "/cliente/altainicial2";
+			}
+		}
+		model.addAttribute("cliente", cliente);
+		return "/cliente/actualizar";
 	}
 
 }

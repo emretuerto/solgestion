@@ -15,6 +15,9 @@ import es.emretuerto.solgestion.servicios.BonoServicioInterface;
 import es.emretuerto.solgestion.servicios.LamparaServicioInterface;
 import es.emretuerto.solgestion.servicios.SesionServicioInterface;
 
+
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -38,7 +41,7 @@ public class SesionServicioImpl implements SesionServicioInterface {
 
 	@Autowired
 	BonoServicioInterface bonoServicio;
-	
+
 	@Autowired
 	BonoRepository bonoDAO;
 
@@ -48,25 +51,21 @@ public class SesionServicioImpl implements SesionServicioInterface {
 	@Autowired
 	LamparaServicioInterface lamparaServicio;
 
-	@Override
-	@Transactional
-	public void insertarSesion(Cliente cliente, Maquina solarium, Double sesionesConsumidasBono,
-			Integer minutosConsumidos) {
-
-		Sesion sesion = new Sesion(cliente, solarium, sesionesConsumidasBono, minutosConsumidos);
-
-		Bono bono = cliente.getBono();
-		if (bono != null) {
-			if (bono.getEsDeMinutos()) {
-				bonoServicio.restarMinutosBono(bono, minutosConsumidos);
-			} else {
-				// bonoServicio.restarSesionesBono(bono, sesionesConsumidasBono);
-			}
-		}
-
-		sesionDao.save(sesion);
-	}
-
+	/*
+	 * @Override
+	 * 
+	 * @Transactional public void insertarSesion(Cliente cliente, Maquina solarium,
+	 * Double sesionesConsumidasBono, Integer minutosConsumidos) {
+	 * 
+	 * Sesion sesion = new Sesion(cliente, solarium, sesionesConsumidasBono,
+	 * minutosConsumidos);
+	 * 
+	 * Bono bono = cliente.getBono(); if (bono != null) { if (bono.getEsDeMinutos())
+	 * { bonoServicio.restarMinutosBono(bono, minutosConsumidos); } else { //
+	 * bonoServicio.restarSesionesBono(bono, sesionesConsumidasBono); } }
+	 * 
+	 * sesionDao.save(sesion); }
+	 */
 	@Override
 	public List<Sesion> listadoSesionesFechaInversa() {
 
@@ -87,16 +86,16 @@ public class SesionServicioImpl implements SesionServicioInterface {
 		maquinaServicio.incrementarContadores(maquina, sesion.getDuracion());
 
 		lamparaServicio.restarSesionLampara(maquina.getLampara(), sesion.getDuracion());
-		
+
 		try {
 			LOG.info("VAMOS A INTENTAR RESTAR LA SESION DEL BONO");
-		//	cliente.getBono().setMinutos(cliente.getBono().getMinutos()-sesion.getDuracion());
+			// cliente.getBono().setMinutos(cliente.getBono().getMinutos()-sesion.getDuracion());
 			Bono bono = cliente.getBono();
-			bono.setMinutos(bono.getMinutos()-sesion.getDuracion());
+			bono.setMinutos(bono.getMinutos() - sesion.getDuracion());
 			LOG.info("¿LO HABREMOS LOGRADO?" + bono.getMinutos());
 			bonoDAO.save(bono);
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 
 		}
 
@@ -105,5 +104,21 @@ public class SesionServicioImpl implements SesionServicioInterface {
 		sesion.setMaquina(maquina);
 
 	}
+
+	@Override
+	public Page<Sesion> listadoSesionesMaquina(Pageable pageable, Maquina maquina, LocalDateTime inicio,
+			LocalDateTime fin) {
+
+		return sesionDao.findAllByMaquinaBetween(pageable, maquina, inicio, fin);
+	}
+
+	@Override
+	public Page<Sesion> listadoMaquina(Integer id,Pageable pageable) {
+
+		//return sesionDao.findByMaquinaIdByOrderByFechaDesc(id);
+		
+		return sesionDao.findByMaquinaIdOrderByFechaDesc(id,pageable);
+	}
+
 
 }

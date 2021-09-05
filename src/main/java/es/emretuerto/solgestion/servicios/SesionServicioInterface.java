@@ -5,6 +5,8 @@
  */
 package es.emretuerto.solgestion.servicios;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -20,12 +22,16 @@ import es.emretuerto.solgestion.modelo.Sesion;
  */
 public interface SesionServicioInterface {
     
-    public void insertarSesion(Cliente cliente, Maquina solarium, Double sesionesConsumidas,Integer minutos);
+ //   public void insertarSesion(Cliente cliente, Maquina solarium, Double sesionesConsumidas,Integer minutos);
     
     List<Sesion> listadoSesionesFechaInversa();
     
     public Page<Sesion> listadoSesionesFechaInversa(Pageable pageable);
     
     public void registraSesion(Cliente cliente, Maquina maquina, Sesion sesion);
+    
+    public Page<Sesion> listadoSesionesMaquina(Pageable pageable, Maquina maquina, LocalDateTime inicio, LocalDateTime fin);
+    
+    public Page<Sesion> listadoMaquina(Integer id, Pageable plageable);
     
 }

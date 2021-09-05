@@ -24,10 +24,10 @@
 					<small th:if="${#fields.hasErrors('identificadorBono')}"
 						th:errors="*{identificadorBono}"
 						class="alert alert-danger col-sm-6"></small>
-					<div class="form-group col-sm-6">
+					<div class="form-group col-sm-6" >
 						<label for="codigoBarras">Código de Barras</label> <input
 							type="text" th:field="*{codigoBarras}" class="form-control"
-							id="codigoBarras">
+							id="codigoBarras" readonly>
 					</div>
 					<small th:if="${#fields.hasErrors('codigoBarras')}"
 						th:errors="*{codigoBarras}" class="alert alert-danger col-sm-6"></small>

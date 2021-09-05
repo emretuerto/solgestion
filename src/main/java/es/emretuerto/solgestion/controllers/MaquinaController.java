@@ -1,5 +1,8 @@
 package es.emretuerto.solgestion.controllers;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.validation.Valid;
@@ -23,9 +26,12 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import es.emretuerto.solgestion.auxiliares.AuxiliarDatos2;
 import es.emretuerto.solgestion.auxiliares.PageRender;
+import es.emretuerto.solgestion.auxiliares.RangoFechas;
 import es.emretuerto.solgestion.modelo.Maquina;
+import es.emretuerto.solgestion.modelo.Sesion;
 import es.emretuerto.solgestion.servicios.LamparaServicioInterface;
 import es.emretuerto.solgestion.servicios.MaquinaServicioInterface;
+import es.emretuerto.solgestion.servicios.SesionServicioInterface;
 import es.emretuerto.solgestion.validaciones.AuxiliarDatos2Validator;
 
 @Controller
@@ -40,6 +46,9 @@ public class MaquinaController {
 
 	@Autowired
 	LamparaServicioInterface lamparaServicio;
+	
+	@Autowired
+	SesionServicioInterface sesionServicio;
 
 	@Autowired
 	private AuxiliarDatos2Validator validador;
@@ -139,4 +148,47 @@ public class MaquinaController {
 		return "redirect:/maquina/listado";
 	}
 
+	@GetMapping("/listado/{id}")
+	public String listarSesionesMaquinas(@PathVariable Integer id, @RequestParam(name = "page", defaultValue = "0") int page, Model model) {
+
+		
+		Pageable pageRequest = PageRequest.of(page, 11);
+		Page<Sesion> sesiones = sesionServicio.listadoMaquina(id, pageRequest);
+		PageRender<Sesion> pageRender = new PageRender<>("", sesiones);
+
+		model.addAttribute("listadoSesiones", sesiones);
+		model.addAttribute("page", pageRender);
+		
+		LOG.info("PREPARANDO LISTADO DE SESIONES POR MÁQUINA");	
+		return "/maquina/listadosesiones";
+
+	}
+	
+	/*
+	@PostMapping("/listadosesiones")
+	public String listarSesionesMaquinasFinal(@RequestParam(name = "page", defaultValue = "0") int page, Model model,
+			SessionStatus status) {
+
+
+		Maquina maquina = (Maquina)model.getAttribute("maquina");
+		
+		LOG.info("ÚLTIMA FASE DEL LISTADO DE SESIONES POR MAQUINA");
+	//	LOG.info("ÚLTIMA FASE DEL LISTADO DE SESIONES POR MAQUI - RANGO" + fechas.toString());
+		LOG.info("ÚLTIMA FASE DEL LISTADO DE SESIONES POR MAQUINA - MAQUINA" + maquina.toString());
+		
+		
+		Pageable pageRequest = PageRequest.of(page, 9);
+		Page<Sesion> sesiones = sesionServicio.listadoSesiones(pageRequest, maquina);
+		PageRender<Sesion> pageRender = new PageRender<>("/maquina/listadosesiones", sesiones);
+
+		model.addAttribute("listadoSesiones", sesiones);
+		model.addAttribute("page", pageRender);
+
+		LOG.info("DATOS DEL LIST DE MAQUINAS" + sesiones.toString());
+		LOG.info("DATOS DEL LIST DE MAQUINAS" + pageRequest.toString());
+		status.setComplete();
+		return "/maquina/listadosesiones";
+
+	}
+	*/
 }
