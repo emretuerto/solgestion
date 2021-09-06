@@ -17,7 +17,6 @@ import es.emretuerto.solgestion.servicios.SesionServicioInterface;
 
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -118,6 +117,18 @@ public class SesionServicioImpl implements SesionServicioInterface {
 		//return sesionDao.findByMaquinaIdByOrderByFechaDesc(id);
 		
 		return sesionDao.findByMaquinaIdOrderByFechaDesc(id,pageable);
+	}
+
+	@Override
+	public List<Sesion> listadoMaquinaFechas(Integer id, LocalDateTime desde, LocalDateTime hasta) {
+		
+		return sesionDao.findByMaquinaIdAndFechaBetweenOrderByFechaDesc(id, desde, hasta);
+	}
+
+	@Override
+	public Page<Sesion> listadoSesionesMaquinaFechas(Pageable pageable, Integer id, LocalDateTime inicio,
+			LocalDateTime fin) {
+	return sesionDao.findByMaquinaIdAndFechaBetweenOrderByFechaDesc(id, inicio, fin, pageable);
 	}
 
 

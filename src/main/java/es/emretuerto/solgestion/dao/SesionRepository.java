@@ -5,7 +5,6 @@ import es.emretuerto.solgestion.modelo.Maquina;
 import es.emretuerto.solgestion.modelo.Sesion;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -28,5 +27,8 @@ public interface SesionRepository extends JpaRepository<Sesion, Long>{
 	
 //	public List<Sesion> findByMaquinaIdByOrderByFechaDesc(Integer id);
 	public Page<Sesion> findByMaquinaIdOrderByFechaDesc(Integer id, Pageable pageable);
+	
+	public Page<Sesion> findByMaquinaIdAndFechaBetweenOrderByFechaDesc(Integer id, LocalDateTime desde, LocalDateTime hasta, Pageable pageable);
     
+	public List<Sesion> findByMaquinaIdAndFechaBetweenOrderByFechaDesc(Integer id, LocalDateTime desde, LocalDateTime hasta);
 }

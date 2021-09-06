@@ -6,7 +6,6 @@
 package es.emretuerto.solgestion.servicios;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -33,5 +32,9 @@ public interface SesionServicioInterface {
     public Page<Sesion> listadoSesionesMaquina(Pageable pageable, Maquina maquina, LocalDateTime inicio, LocalDateTime fin);
     
     public Page<Sesion> listadoMaquina(Integer id, Pageable plageable);
+    
+    public List<Sesion> listadoMaquinaFechas(Integer id, LocalDateTime desde, LocalDateTime hasta);
+    
+    public Page<Sesion> listadoSesionesMaquinaFechas(Pageable pageable, Integer Id, LocalDateTime inicio, LocalDateTime fin);
     
 }

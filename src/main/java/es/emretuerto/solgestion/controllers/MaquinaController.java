@@ -1,16 +1,20 @@
 package es.emretuerto.solgestion.controllers;
 
+import java.io.ByteArrayInputStream;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -33,9 +38,10 @@ import es.emretuerto.solgestion.servicios.LamparaServicioInterface;
 import es.emretuerto.solgestion.servicios.MaquinaServicioInterface;
 import es.emretuerto.solgestion.servicios.SesionServicioInterface;
 import es.emretuerto.solgestion.validaciones.AuxiliarDatos2Validator;
+import es.emretuerto.solgestion.vistas.pdf.GenerarReportePDF;
 
 @Controller
-@SessionAttributes({ "maquina", "datos" })
+@SessionAttributes({ "maquina", "datos", "fechas", "pdf" })
 @RequestMapping("/maquina")
 public class MaquinaController {
 
@@ -46,7 +52,7 @@ public class MaquinaController {
 
 	@Autowired
 	LamparaServicioInterface lamparaServicio;
-	
+
 	@Autowired
 	SesionServicioInterface sesionServicio;
 
@@ -149,46 +155,90 @@ public class MaquinaController {
 	}
 
 	@GetMapping("/listado/{id}")
-	public String listarSesionesMaquinas(@PathVariable Integer id, @RequestParam(name = "page", defaultValue = "0") int page, Model model) {
+	public String listarSesionesMaquinas(@PathVariable Integer id, Model model) {
 
-		
+		/*
+		 * Pageable pageRequest = PageRequest.of(page, 11); Page<Sesion> sesiones =
+		 * sesionServicio.listadoMaquina(id, pageRequest); PageRender<Sesion> pageRender
+		 * = new PageRender<>("", sesiones);
+		 */
+
+		RangoFechas fechas = new RangoFechas();
+		Maquina maquina = maquinaServicio.findById(id);
+
+		model.addAttribute("fechas", fechas);
+		model.addAttribute("maquina", maquina);
+
+		// model.addAttribute("page", pageRender);
+
+		LOG.info("PREPARANDO LISTADO DE SESIONES POR MÁQUINA");
+		return "/maquina/listadosesionesmaquina";
+
+	}
+
+	@PostMapping("/listadosesiones")
+	public String listarSesionesMaquinasFechas(RangoFechas fechas,
+			@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
+
+		LocalDateTime inicio, fin;
+
+		inicio = fechas.getInicio().atStartOfDay();
+		fin = fechas.getFin().plusDays(1).atStartOfDay();
+
+		Maquina maquina = (Maquina) model.getAttribute("maquina");
+		LOG.info("LAS FECHAS QUE LLEGAN SON " + fechas.toString());
+
 		Pageable pageRequest = PageRequest.of(page, 11);
-		Page<Sesion> sesiones = sesionServicio.listadoMaquina(id, pageRequest);
+		Page<Sesion> sesiones = sesionServicio.listadoSesionesMaquinaFechas(pageRequest, maquina.getId(), inicio, fin);
+		List<Sesion> aver = sesionServicio.listadoMaquinaFechas(maquina.getId(), inicio, fin);
+
+		LOG.info("EN EL LISTADO ANTERIOR LAS SESIONES SON" + aver.toString());
+		LOG.info("EN EL LISTADO ANTERIOR LAS SESIONES SON" + maquina.getId());
+		LOG.info("EN EL LISTADO ANTERIOR LAS SESIONES SON" + inicio);
+		LOG.info("EN EL LISTADO ANTERIOR LAS SESIONES SON" + fin);
+
 		PageRender<Sesion> pageRender = new PageRender<>("", sesiones);
 
 		model.addAttribute("listadoSesiones", sesiones);
 		model.addAttribute("page", pageRender);
-		
-		LOG.info("PREPARANDO LISTADO DE SESIONES POR MÁQUINA");	
+		model.addAttribute("pdf", aver);
+
+		LOG.info("PREPARANDO LISTADO DE SESIONES POR MÁQUINA");
 		return "/maquina/listadosesiones";
 
 	}
-	
-	/*
-	@PostMapping("/listadosesiones")
-	public String listarSesionesMaquinasFinal(@RequestParam(name = "page", defaultValue = "0") int page, Model model,
-			SessionStatus status) {
+
+	@RequestMapping(value = "/listado/pdf", method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<InputStreamResource> listadoPdf(Model model) {
 
 
-		Maquina maquina = (Maquina)model.getAttribute("maquina");
-		
-		LOG.info("ÚLTIMA FASE DEL LISTADO DE SESIONES POR MAQUINA");
-	//	LOG.info("ÚLTIMA FASE DEL LISTADO DE SESIONES POR MAQUI - RANGO" + fechas.toString());
-		LOG.info("ÚLTIMA FASE DEL LISTADO DE SESIONES POR MAQUINA - MAQUINA" + maquina.toString());
-		
-		
-		Pageable pageRequest = PageRequest.of(page, 9);
-		Page<Sesion> sesiones = sesionServicio.listadoSesiones(pageRequest, maquina);
-		PageRender<Sesion> pageRender = new PageRender<>("/maquina/listadosesiones", sesiones);
+		Maquina maquina = (Maquina) model.getAttribute("maquina");
+		RangoFechas fechas = (RangoFechas) model.getAttribute("fechas");
+		@SuppressWarnings("unchecked")
+		List<Sesion> sesionesPDF = (List<Sesion>) model.getAttribute("pdf");
 
-		model.addAttribute("listadoSesiones", sesiones);
-		model.addAttribute("page", pageRender);
+		LocalDateTime inicio, fin;
+		inicio = fechas.getInicio().atStartOfDay();
+		fin = fechas.getFin().plusDays(1).atStartOfDay();
 
-		LOG.info("DATOS DEL LIST DE MAQUINAS" + sesiones.toString());
-		LOG.info("DATOS DEL LIST DE MAQUINAS" + pageRequest.toString());
-		status.setComplete();
-		return "/maquina/listadosesiones";
+		LOG.info("VAMOS A VER SI PASAMOS EL LISTADO A PDF" + model.toString());
+		LOG.info("VAMOS A VER SI PASAMOS EL LISTADO A PDF" + maquina.toString());
+		LOG.info("VAMOS A VER SI PASAMOS EL LISTADO A PDF" + fechas.toString());
+		LOG.info("EN EL LISTADO POSTERIOR LAS SESIONES SON" + sesionesPDF.toString());
+
+
+		List<Sesion> aver = sesionServicio.listadoMaquinaFechas(maquina.getId(), inicio, fin);
+
+		LOG.info("QUE SESIONES LLEGAN" + aver.toString());
+
+		ByteArrayInputStream bis = GenerarReportePDF.sesionesReport(sesionesPDF);
+
+		var headers = new HttpHeaders();
+		headers.add("Content-Disposition", "inline; filename=sesiones.pdf");
+
+		return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
+				.body(new InputStreamResource(bis));
 
 	}
-	*/
+
 }

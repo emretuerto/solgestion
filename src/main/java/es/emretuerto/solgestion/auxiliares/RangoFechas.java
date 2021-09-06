@@ -1,40 +1,41 @@
 package es.emretuerto.solgestion.auxiliares;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.springframework.stereotype.Component;
 
 @Component
 public class RangoFechas {
 
-	private LocalDateTime inicio;
+	private LocalDate inicio;
 
-	private LocalDateTime fin;
+	private LocalDate fin;
 
-	public RangoFechas(LocalDateTime inicio, LocalDateTime fin) {
+	public RangoFechas(LocalDate inicio, LocalDate fin) {
 		this.inicio = inicio;
 		this.fin = fin;
 	}
 
 	public RangoFechas() {
 		
-		this.fin = LocalDateTime.now();
+		this.inicio = LocalDate.now();
+		this.fin = LocalDate.now();
 		
 	}
 
-	public LocalDateTime getInicio() {
+	public LocalDate getInicio() {
 		return inicio;
 	}
 
-	public void setInicio(LocalDateTime inicio) {
+	public void setInicio(LocalDate inicio) {
 		this.inicio = inicio;
 	}
 
-	public LocalDateTime getFin() {
+	public LocalDate getFin() {
 		return fin;
 	}
 
-	public void setFin(LocalDateTime fin) {
+	public void setFin(LocalDate fin) {
 		this.fin = fin;
 	}
 

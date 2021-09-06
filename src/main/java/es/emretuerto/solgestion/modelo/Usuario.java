@@ -15,7 +15,8 @@ import javax.persistence.Enumerated;
 
 public class Usuario {
 	
-    private static final long serialVersionUID = 1L;
+	 @SuppressWarnings("unused")
+	private static final long serialVersionUID = 1L;
     
 
 	@Id
