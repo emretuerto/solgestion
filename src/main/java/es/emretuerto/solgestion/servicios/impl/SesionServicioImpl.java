@@ -122,13 +122,13 @@ public class SesionServicioImpl implements SesionServicioInterface {
 	@Override
 	public List<Sesion> listadoMaquinaFechas(Integer id, LocalDateTime desde, LocalDateTime hasta) {
 		
-		return sesionDao.findByMaquinaIdAndFechaBetweenOrderByFechaDesc(id, desde, hasta);
+		return sesionDao.findByMaquinaIdAndFechaBetweenOrderByFecha(id, desde, hasta);
 	}
 
 	@Override
 	public Page<Sesion> listadoSesionesMaquinaFechas(Pageable pageable, Integer id, LocalDateTime inicio,
 			LocalDateTime fin) {
-	return sesionDao.findByMaquinaIdAndFechaBetweenOrderByFechaDesc(id, inicio, fin, pageable);
+	return sesionDao.findByMaquinaIdAndFechaBetweenOrderByFecha(id, inicio, fin, pageable);
 	}
 
 

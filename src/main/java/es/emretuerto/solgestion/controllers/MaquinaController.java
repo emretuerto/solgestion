@@ -1,10 +1,12 @@
 package es.emretuerto.solgestion.controllers;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,7 @@ import es.emretuerto.solgestion.servicios.MaquinaServicioInterface;
 import es.emretuerto.solgestion.servicios.SesionServicioInterface;
 import es.emretuerto.solgestion.validaciones.AuxiliarDatos2Validator;
 import es.emretuerto.solgestion.vistas.pdf.GenerarReportePDF;
+import es.emretuerto.solgestion.vistas.xlsx.InformeSesionesExcel;
 
 @Controller
 @SessionAttributes({ "maquina", "datos", "fechas", "pdf" })
@@ -197,7 +200,7 @@ public class MaquinaController {
 		LOG.info("EN EL LISTADO ANTERIOR LAS SESIONES SON" + inicio);
 		LOG.info("EN EL LISTADO ANTERIOR LAS SESIONES SON" + fin);
 
-		PageRender<Sesion> pageRender = new PageRender<>("", sesiones);
+		PageRender<Sesion> pageRender = new PageRender<>("listadosesiones", sesiones);
 
 		model.addAttribute("listadoSesiones", sesiones);
 		model.addAttribute("page", pageRender);
@@ -240,5 +243,20 @@ public class MaquinaController {
 				.body(new InputStreamResource(bis));
 
 	}
-
+	
+	 @GetMapping("/listado/excel")
+	    public void exportToExcel(HttpServletResponse response, Model model) throws IOException {
+	        response.setContentType("application/octet-stream");
+	         
+	        String headerKey = "Content-Disposition";
+	        String headerValue = "attachment; filename=sesiones_listado.xlsx";
+	        response.setHeader(headerKey, headerValue);
+	         
+	        @SuppressWarnings("unchecked")
+			List<Sesion> sesionesPDF = (List<Sesion>) model.getAttribute("pdf");
+	         
+	        InformeSesionesExcel excelExporter = new InformeSesionesExcel(sesionesPDF);
+	         
+	        excelExporter.export(response);    
+	    }   
 }

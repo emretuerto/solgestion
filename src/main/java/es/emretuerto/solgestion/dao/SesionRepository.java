@@ -28,7 +28,7 @@ public interface SesionRepository extends JpaRepository<Sesion, Long>{
 //	public List<Sesion> findByMaquinaIdByOrderByFechaDesc(Integer id);
 	public Page<Sesion> findByMaquinaIdOrderByFechaDesc(Integer id, Pageable pageable);
 	
-	public Page<Sesion> findByMaquinaIdAndFechaBetweenOrderByFechaDesc(Integer id, LocalDateTime desde, LocalDateTime hasta, Pageable pageable);
+	public Page<Sesion> findByMaquinaIdAndFechaBetweenOrderByFecha(Integer id, LocalDateTime desde, LocalDateTime hasta, Pageable pageable);
     
-	public List<Sesion> findByMaquinaIdAndFechaBetweenOrderByFechaDesc(Integer id, LocalDateTime desde, LocalDateTime hasta);
+	public List<Sesion> findByMaquinaIdAndFechaBetweenOrderByFecha(Integer id, LocalDateTime desde, LocalDateTime hasta);
 }
